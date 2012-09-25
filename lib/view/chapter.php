@@ -58,8 +58,26 @@ class Chapter extends NrView
 <html>
 <head>
 <title>{$this->page->novelTitle} - {$this->page->title}</title>
+<script language="Javascript">
+function navpage(ev) {
+    ev = ev || window.event;
+    switch (ev.keyCode) {
+        case 13:
+            location.href = "{$this->page->tocLink}";
+            break;
+        case 37:
+            if ("{$this->page->prevLink}".length)
+                location.href = "{$this->page->prevLink}";
+            break;
+        case 39:
+            if ("{$this->page->nextLink}".length)
+                location.href = "{$this->page->nextLink}";
+            break;
+    }
+}
+</script>
 </head>
-<body>
+<body onkeyup="navpage(arguments[0])">
 <nav>
 <a href="{$this->page->prevLink}">Prev</a>
 <a href="{$this->page->tocLink}">{$this->page->title}</a>
