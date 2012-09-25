@@ -131,6 +131,8 @@ abstract class Page
             return $this->title;
         else if ('modifiedTime' == $prop)
             return $this->modifiedTime;
+        else if ('url' == $prop)
+            return $this->url;
         return;
     }
 

@@ -63,6 +63,7 @@ class Chapter extends NrView
 <nav>
 <a href="{$this->page->prevLink}">Prev</a>
 <a href="{$this->page->tocLink}">{$this->page->title}</a>
+<a href="{$this->page->url}" target="_blank">#</a>
 <a href="{$this->page->nextLink}">Next</a>
 </nav>
 <article>
