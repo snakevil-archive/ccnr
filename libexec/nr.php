@@ -30,6 +30,9 @@ $o_resp = NrResponse::singleton();
 if (!isset($_SERVER['QUERY_STRING']) || !strlen($_SERVER['QUERY_STRING']))
     $o_resp->halt(404);
 
+if (strpos($_SERVER['QUERY_STRING'], ':/'))
+    $_SERVER['QUERY_STRING'] = str_replace(':/', '://', $_SERVER['QUERY_STRING']);
+
 try
 {
     $o_chapter = NrModel\Analyzer::parse($_SERVER['QUERY_STRING']);

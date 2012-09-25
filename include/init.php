@@ -23,8 +23,6 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-$_SERVER['QUERY_STRING'] = str_replace(':/', '://', $_SERVER['QUERY_STRING']);
-
 spl_autoload_register(function($class)
     {
         settype($class, 'string');
