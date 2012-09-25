@@ -53,10 +53,13 @@ class Chapter extends NrView
     public function __toString()
     {
         $s_paragraphs = implode("</p>\n<p>", $this->page->paragraphs);
+        if (false !== strpos($s_paragraphs, '![IMAGE]('))
+            $s_paragraphs = preg_replace('@!\[IMAGE\]\((\S+)\)@U', '<img src="$1" />', $s_paragraphs);
         return <<<HTML
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8" />
 <title>{$this->page->novelTitle} - {$this->page->title}</title>
 <script language="Javascript">
 function navpage(ev) {

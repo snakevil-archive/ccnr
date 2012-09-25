@@ -60,6 +60,7 @@ class TOC extends NrView
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8" />
 <title>{$this->page->title}</title>
 </head>
 <body>
