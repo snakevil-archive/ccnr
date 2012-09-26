@@ -64,6 +64,8 @@ class Chapter extends NrView
 <meta charset="utf-8" />
 <title>{$this->page->novelTitle} - {$this->page->title}</title>
 <link rel="stylesheet" media="screen" href="{$s_pshare}screen.css" />
+<link rel="icon" href="{$s_pshare}cnr.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="{$s_pshare}cnr.ico" type="image/x-icon" />
 <script language="Javascript">
 function navpage(ev) {
     ev = ev || window.event;
