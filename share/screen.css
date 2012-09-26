@@ -26,7 +26,8 @@ BODY {
   font: 15px/1.8 Helvetica, "Microsoft Yahei", Arial, sans-serif;
   color: DimGray;
   background: Honeydew;
-  margin: 16px 19%;
+  margin: 16px auto;
+  width: 720px;
 }
 
 H1 {
@@ -57,8 +58,8 @@ A {
 }
 
 A:visited {
-  color: BlueViolet;
-  border-color: BlueViolet;
+  color: DarkOrchid;
+  border-color: DarkOrchid;
 }
 
 A:hover {
@@ -103,6 +104,16 @@ H2 A:hover {
   color: Black;
   border-color: Black;
   border-style: solid;
+}
+
+BLOCKQUOTE {
+  margin: 0;
+  padding: 0 10px;
+}
+
+P IMG {
+  display: block;
+  margin: 0 auto;
 }
 
 /* vim:se ft=css ff=unix fenc=utf-8 tw=8486 sw=2 ts=2 sts=2 wrap: */
