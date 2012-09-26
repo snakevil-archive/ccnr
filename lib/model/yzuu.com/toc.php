@@ -55,6 +55,10 @@ class TOC extends NrModel\TOC
         if (false === $s_ret)
             return $this;
         $this->title = $s_ret;
+        $s_ret = $this->crop('@<h3 class="tc">作者:&nbsp;@', '@&nbsp;&nbsp;最后更新：&nbsp;@', $content);
+        if (false === $s_ret)
+            return $this;
+        $this->author = $s_ret;
         $s_ret = $this->crop('@<h2 class="tc">正文</h2>\s*<ul>@', '@</ul>@', $content);
         if (false === $s_ret ||
             false === preg_match_all('@<li><a href="/look/\d+/(\d+)/".*>(.*)</a></li>@U', $s_ret, $a_tmp)

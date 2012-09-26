@@ -30,6 +30,13 @@ use Exception;
 abstract class TOC extends Page
 {
     /**
+     * Retrieves the author.
+     *
+     * @var string
+     */
+    protected $author;
+
+    /**
      * Retrieves the link URLs of chapters in associated array.
      *
      * @var array
@@ -48,7 +55,9 @@ abstract class TOC extends Page
     final public function __get($prop)
     {
         settype($prop, 'string');
-        if ('chapters' == $prop)
+        if ('author' == $prop)
+            return $this->author;
+        else if ('chapters' == $prop)
             return $this->chapters;
         return parent::__get($prop);
     }

@@ -22,99 +22,23 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-BODY {
-  font: 15px/1.8 Helvetica, "Microsoft Yahei", Arial, sans-serif;
-  color: DimGray;
-  background: Honeydew;
-  margin: 16px auto;
-  width: 780px;
-}
+BODY { background: Honeydew; color: DimGray; font: 15px/1.8 Helvetica, "Microsoft Yahei", Arial, sans-serif; margin: 16px auto; width: 780px; }
+H1 { border: 0 solid Silver; border-bottom-width: 4px; margin: 8px; padding: 0 0 8px 0; text-align: center;}
+OL { margin: 16px auto; padding: 0 4px; width: 720px;}
+OL LI { display: inline; float: left; margin: 2px 8px; width: 30%;}
+A { border: 0 dashed transparent; border-bottom-width: 1px; color: RoyalBlue; text-decoration: none;}
+A:visited { border-color: DarkOrchid; color: DarkOrchid;}
+A:hover { border-color: Black; border-style: solid; color: Black;}
+UL { margin: 0 16px; padding: 0;}
+UL LI { display: inline; float: left; margin: 24px 0 0 0;}
+UL LI.nextLink { float: right;}
+H2 { border: 0 solid Silver; border-bottom-width: 1px; margin: 8px; padding: 0 0 8px 0; text-align: center;}
+H2 A { color: DimGray;}
+H2 A:visited { border-color: transparent; color: DimGray;}
+H2 A:hover { border-color: Black; border-style: solid; color: Black;}
+BLOCKQUOTE { margin: 0 auto; padding: 0; width: 720px;}
+P IMG { display: block; margin: 0 auto;}
 
-H1 {
-  text-align: center;
-  margin: 8px;
-  padding: 0 0 8px 0;
-  border: 0 solid Silver;
-  border-bottom-width: 4px;
-}
-
-OL {
-  margin: 16px 0;
-  padding: 0 4px;
-}
-
-OL LI {
-  display: inline;
-  float: left;
-  margin: 2px 8px;
-  width: 30%;
-}
-
-A {
-  border: 0 dashed transparent;
-  border-bottom-width: 1px;
-  text-decoration: none;
-  color: RoyalBlue;
-}
-
-A:visited {
-  color: DarkOrchid;
-  border-color: DarkOrchid;
-}
-
-A:hover {
-  color: Black;
-  border-color: Black;
-  border-style: solid;
-}
-
-UL {
-  margin: 0 16px;
-  padding: 0;
-}
-
-UL LI {
-  display: inline;
-  float: left;
-  margin: 24px 0 0 0;
-}
-
-UL LI.nextLink {
-  float: right;
-}
-
-H2 {
-  text-align: center;
-  margin: 8px;
-  padding: 0 0 8px 0;
-  border: 0 solid Silver;
-  border-bottom-width: 1px;
-}
-
-H2 A {
-  color: DimGray;
-}
-
-H2 A:visited {
-  color: DimGray;
-  border-color: transparent;
-}
-
-H2 A:hover {
-  color: Black;
-  border-color: Black;
-  border-style: solid;
-}
-
-BLOCKQUOTE {
-  width: 720px;
-  margin: 0 auto;
-  padding: 0;
-}
-
-P IMG {
-  display: block;
-  margin: 0 auto;
-}
+H1::after { color: Silver; content: "by " attr(author); font-size: 14px; margin: 24px 0 0 16px; position: absolute;}
 
 /* vim:se ft=css ff=unix fenc=utf-8 tw=8486 sw=2 ts=2 sts=2 wrap: */

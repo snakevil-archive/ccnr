@@ -67,7 +67,7 @@ class TOC extends NrView
 <link rel="stylesheet" media="screen" href="{$s_pshare}screen.css" />
 </head>
 <body>
-<h1>{$this->page->title}</h1>
+<h1 author="{$this->page->author}">{$this->page->title}</h1>
 <ol>
 <li>{$s_chapters}</li>
 </ol>
