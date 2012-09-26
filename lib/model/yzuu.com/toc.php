@@ -50,7 +50,7 @@ class TOC extends NrModel\TOC
     protected function parse($content)
     {
         settype($content, 'string');
-        $content = iconv('gb2312', 'utf-8//ignore', $content);
+        $content = iconv('gbk', 'utf-8//ignore', $content);
         $s_ret = $this->crop('@<h1 class="tc fred"><font size="6">@', '@</font></h1>@', $content);
         if (false === $s_ret)
             return $this;

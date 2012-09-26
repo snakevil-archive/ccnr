@@ -50,7 +50,7 @@ class Chapter extends NrModel\Chapter
     protected function parse($content)
     {
         settype($content, 'string');
-        $content = iconv('gb2312', 'utf-8//ignore', $content);
+        $content = iconv('gbk', 'utf-8//ignore', $content);
         $s_ret = $this->crop('@<meta name="description" content="@', '@">@', $content);
         if (false === $s_ret)
             return $this;
