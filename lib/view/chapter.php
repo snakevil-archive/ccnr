@@ -55,12 +55,15 @@ class Chapter extends NrView
         $s_paragraphs = implode("</p>\n<p>", $this->page->paragraphs);
         if (false !== strpos($s_paragraphs, '![IMAGE]('))
             $s_paragraphs = preg_replace('@!\[IMAGE\]\((\S+)\)@U', '<img src="$1" />', $s_paragraphs);
+        $a_tmp = count_chars($this->page->url, 1);
+        $s_pshare = str_repeat('../', $a_tmp[47]) . 'share/';
         return <<<HTML
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
 <title>{$this->page->novelTitle} - {$this->page->title}</title>
+<link rel="stylesheet" media="screen" href="{$s_pshare}screen.css" />
 <script language="Javascript">
 function navpage(ev) {
     ev = ev || window.event;
@@ -81,15 +84,17 @@ function navpage(ev) {
 </script>
 </head>
 <body onkeyup="navpage(arguments[0])">
-<nav>
-<a href="{$this->page->prevLink}">Prev</a>
+<ul>
+<li><a href="{$this->page->prevLink}">Prev</a></li>
+<li class="nextLink"><a href="{$this->page->nextLink}">Next</a></li>
+</ul>
+<h2>
 <a href="{$this->page->tocLink}">{$this->page->title}</a>
 <a href="{$this->page->url}" target="_blank">#</a>
-<a href="{$this->page->nextLink}">Next</a>
-</nav>
-<article>
+</h2>
+<blockquote cite="{$this->page->url}">
 <p>{$s_paragraphs}</p>
-</article>
+</blockquote>
 </body>
 </html>
 HTML;

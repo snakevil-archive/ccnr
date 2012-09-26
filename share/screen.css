@@ -1,0 +1,108 @@
+/*
+ * Provides style rules on `screen' media.
+ *
+ * This file is part of NOVEL.READER.
+ *
+ * NOVEL.READER is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * NOVEL.READER is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with NOVEL.READER.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @package   novel.reader
+ * @author    Snakevil Zen <zsnakevil@gmail.com>
+ * @copyright © 2012 snakevil.in
+ * @license   http://www.gnu.org/licenses/gpl.html
+ */
+
+BODY {
+  font: 15px/1.8 Helvetica, "Microsoft Yahei", Arial, sans-serif;
+  color: DimGray;
+  background: Honeydew;
+  margin: 16px 19%;
+}
+
+H1 {
+  text-align: center;
+  margin: 8px;
+  padding: 0 0 8px 0;
+  border: 0 solid Silver;
+  border-bottom-width: 4px;
+}
+
+OL {
+  margin: 16px 0;
+  padding: 0 4px;
+}
+
+OL LI {
+  display: inline;
+  float: left;
+  margin: 2px 8px;
+  width: 30%;
+}
+
+A {
+  border: 0 dashed transparent;
+  border-bottom-width: 1px;
+  text-decoration: none;
+  color: RoyalBlue;
+}
+
+A:visited {
+  color: BlueViolet;
+  border-color: BlueViolet;
+}
+
+A:hover {
+  color: Black;
+  border-color: Black;
+  border-style: solid;
+}
+
+UL {
+  margin: 0 16px;
+  padding: 0;
+}
+
+UL LI {
+  display: inline;
+  float: left;
+  margin: 32px 0;
+}
+
+UL LI.nextLink {
+  float: right;
+}
+
+H2 {
+  text-align: center;
+  margin: 8px;
+  padding: 0 0 8px 0;
+  border: 0 solid Silver;
+  border-bottom-width: 1px;
+}
+
+H2 A {
+  color: DimGray;
+}
+
+H2 A:visited {
+  color: DimGray;
+  border-color: transparent;
+}
+
+H2 A:hover {
+  color: Black;
+  border-color: Black;
+  border-style: solid;
+}
+
+/* vim:se ft=css ff=unix fenc=utf-8 tw=8486 sw=2 ts=2 sts=2 wrap: */

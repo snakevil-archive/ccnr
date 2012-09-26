@@ -56,12 +56,15 @@ class TOC extends NrView
                 {
                     return $url . '">' . $title;
                 }, array_keys($this->page->chapters), array_values($this->page->chapters))) . '</a>';
+        $a_tmp = count_chars($this->page->url, 1);
+        $s_pshare = str_repeat('../', $a_tmp[47]) . 'share/';
         return <<<HTML
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" />
 <title>{$this->page->title}</title>
+<link rel="stylesheet" media="screen" href="{$s_pshare}screen.css" />
 </head>
 <body>
 <h1>{$this->page->title}</h1>
