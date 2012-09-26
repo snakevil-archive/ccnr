@@ -22,23 +22,53 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-BODY { background: Honeydew; color: DimGray; font: 16px/1.8 Helvetica, "Microsoft Yahei", Arial, sans-serif; margin: 0 auto 16px auto; width: 750px }
-H1 { border: 0 solid Silver; border-bottom-width: 4px; margin: 0; padding: 16px 0 8px 0; text-align: center }
-OL { margin: 16px auto; padding: 0 4px; width: 720px }
-OL LI { display: inline; float: left; margin: 2px 8px; width: 30% }
-A { border: 0 dashed transparent; border-bottom-width: 1px; color: RoyalBlue; text-decoration: none }
-A:visited { border-color: DarkOrchid; color: DarkOrchid }
-A:hover { border-color: Black; border-style: solid; color: Black }
-UL { margin: 0; padding: 0; position: fixed; width: 750px; height: 0; z-index: 1 }
-UL LI { display: inline; float: left; margin: 32px 16px 8px 16px }
-UL LI.nextLink { float: right }
-H2 { background: Honeydew; border: 0 solid Silver; border-bottom-width: 1px; margin: 0; padding: 12px 0 4px 0; position: fixed; text-align: center; width: 750px }
-H2 A { color: DimGray }
-H2 A:visited { border-color: transparent; color: DimGray }
-H2 A:hover { border-color: Black; border-style: solid; color: Black }
-BLOCKQUOTE { margin: 0 auto; padding: 56px 0 0 0; width: 720px }
-P IMG { display: block; margin: 0 auto }
+body { background: Honeydew; color: DimGray; font: 16px/1.8 Helvetica, "Microsoft Yahei", Arial, sans-serif; margin: 0 auto; max-width: 750px }
+a { border: dashed Honeydew 0; border-bottom-width: 1px; color: RoyalBlue; line-height: 1.5; text-decoration: none }
+a:visited { color: DarkOrchid }
+a:hover { border-color: Black; color: Black }
 
-H1::after { color: Silver; content: "by " attr(author); font-size: 14px; margin: 24px 0 0 16px; position: absolute }
+h1 { border: solid Silver 0; border-bottom-width: 4px; margin: 0; padding: 16px 0 8px 0; text-align: center; white-space: nowrap }
+h1 label { position: relative }
+h1 label::after { bottom: -8px; left: 100%; color: Silver; content: "by " attr(author); font-size: 13px; font-weight: normal; font-variant: small-caps; margin: 0 0 0 8px; position: absolute }
+ol { list-style-type: none; margin: 0; padding: 16px 8px }
+ol li { display: inline; float: left; margin: 4px 8px; overflow: hidden; padding: 0; width: 164px }
+
+h2 { background: Honeydew; border: solid Silver 0; border-bottom-width: 1px; margin: 0; overflow: hidden; padding: 8px 0 4px 0; position: fixed; text-align: center; white-space: nowrap; width: 750px }
+h2 a, h2 a:visited { color: DimGray }
+blockquote { margin: 0 auto; overflow: hidden; padding: 64px 0 8px 0; width: 720px }
+p { margin: 4px 0; padding: 0 }
+p img { display: block; margin: 0 auto }
+ul { list-style-type: none; margin: 0; overflow: hidden; padding: 0; position: fixed; top: 32px; width: 750px }
+ul li { display: inline; float: left; margin: 0 16px }
+ul li.nextLink { float: right }
+
+@media (orientation: portrait) {
+body { font-size: 18px }
+
+h1 { font-size: 22px; padding: 16px 0 }
+h1 label::after { bottom: -20px; left: 62%; margin: 0 }
+ol { padding: 4px }
+ol li { margin: 2px 4px;  width: auto }
+
+h2 { font-size: 18px; left: 0; right: 0; width: auto }
+blockquote { padding: 48px 0 8px 0; width: auto }
+p { margin: 4px 8px; text-indent: 2em }
+ul { font-size: 15px; left: 0; right: 0; top: 16px; width: auto }
+ul li { margin: 0 4px }
+}
+
+@media (max-device-width: 999px) and (orientation: landscape) {
+body { font-size: 18px }
+
+h1 { font-size: 22px; padding: 8px 0 }
+ol { padding: 4px }
+ol li { margin: 2px 4px;  width: auto }
+
+h2 { font-size: 18px; left: 0; padding: 4px 0 0 0; right: 0; width: auto }
+blockquote { padding: 48px 0 8px 0; width: auto }
+p { font-size: 10px; margin: 4px 8px; text-indent: 2em }
+ul { font-size: 15px; left: 0; right: 0; top: 8px; width: auto }
+ul li { margin: 0 4px }
+}
 
 /* vim:se ft=css ff=unix fenc=utf-8 tw=8486 sw=2 ts=2 sts=2 wrap: */
