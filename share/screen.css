@@ -27,7 +27,7 @@ BODY {
   color: DimGray;
   background: Honeydew;
   margin: 16px auto;
-  width: 720px;
+  width: 780px;
 }
 
 H1 {
@@ -76,7 +76,7 @@ UL {
 UL LI {
   display: inline;
   float: left;
-  margin: 32px 0;
+  margin: 24px 0 0 0;
 }
 
 UL LI.nextLink {
@@ -107,8 +107,9 @@ H2 A:hover {
 }
 
 BLOCKQUOTE {
-  margin: 0;
-  padding: 0 10px;
+  width: 720px;
+  margin: 0 auto;
+  padding: 0;
 }
 
 P IMG {
