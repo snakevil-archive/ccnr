@@ -62,6 +62,7 @@ class Chapter extends NrView
 <html>
 <head>
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 <title>{$this->page->novelTitle} - {$this->page->title}</title>
 <link rel="stylesheet" media="screen" href="{$s_pshare}screen.css" />
 <link rel="icon" href="{$s_pshare}cnr.ico" type="image/x-icon" />
@@ -70,33 +71,24 @@ class Chapter extends NrView
 function navpage(ev) {
     ev = ev || window.event;
     switch (ev.keyCode) {
-        case 13:
-            location.href = "{$this->page->tocLink}";
-            break;
-        case 37:
-            if ("{$this->page->prevLink}".length)
-                location.href = "{$this->page->prevLink}";
-            break;
-        case 39:
-            if ("{$this->page->nextLink}".length)
-                location.href = "{$this->page->nextLink}";
-            break;
+        case 13:location.href="{$this->page->tocLink}";break;
+        case 37:if("{$this->page->prevLink}".length)location.href="{$this->page->prevLink}";break;
+        case 39:if("{$this->page->nextLink}".length)location.href="{$this->page->nextLink}";break;
     }
 }
 </script>
 </head>
 <body onkeyup="navpage(arguments[0])">
-<ul>
-<li><a href="{$this->page->prevLink}">Prev</a></li>
-<li class="nextLink"><a href="{$this->page->nextLink}">Next</a></li>
-</ul>
 <h2>
 <a href="{$this->page->tocLink}">{$this->page->title}</a>
-<a href="{$this->page->url}" target="_blank">#</a>
 </h2>
 <blockquote cite="{$this->page->url}">
 <p>{$s_paragraphs}</p>
 </blockquote>
+<ul>
+<li><a href="{$this->page->prevLink}">上一章</a></li>
+<li class="nextLink"><a href="{$this->page->nextLink}">下一章</a></li>
+</ul>
 </body>
 </html>
 HTML;
