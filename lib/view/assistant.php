@@ -67,6 +67,7 @@ class Assistant extends NrView
      */
     public function __toString()
     {
+        $s_tip = (strlen($this->tip) ? '[WARNING] ' : '') . $this->tip;
         $a_tmp = count_chars($this->url, 1);
         $s_pshare = (isset($a_tmp[47]) ? str_repeat('../', $a_tmp[47]) : '') . 'share/';
         return <<<HTML
@@ -75,21 +76,18 @@ class Assistant extends NrView
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Clean & Clear Novel Reader</title>
+<title>CCNR</title>
 <link rel="stylesheet" media="screen" href="{$s_pshare}screen.css" />
 <link rel="icon" href="{$s_pshare}ccnr.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="{$s_pshare}ccnr.ico" type="image/x-icon" />
 </head>
 <body>
-<dl>
-<dd>
+<h3>Clean & Clear Novel Reader</h3>
 <form action="?">
-<input name="s" type="text" />
-<input type="submit" value="Read" />
+<input name="s" type="text" size="64" placeholder="Paste/Type URL here and Go to..." />
+<input class="button" type="submit" value="READ" />
 </form>
-</dd>
-<dt>{$this->tip}</dt>
-</dl>
+<h4>{$s_tip}</h4>
 </body>
 </html>
 HTML;

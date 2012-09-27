@@ -24,8 +24,15 @@
 
 body { background: Honeydew; color: DimGray; font: 16px/1.8 Helvetica, "Microsoft Yahei", Arial, sans-serif; margin: 0 auto; max-width: 750px }
 a { border: dashed Honeydew 0; border-bottom-width: 1px; color: RoyalBlue; line-height: 1.5; text-decoration: none }
+a[href=""] { display: none }
 a:visited { color: DarkOrchid }
 a:hover { border-color: Black; color: Black !important }
+
+h3 { font-family: Georgia, "Times New Roman", serif; font-size: 48px; font-variant: small-caps; margin: 24% 0 4% 0; padding: 0; text-align: center }
+form { margin: 0; padding: 0; text-align: center }
+input { border: solid Silver 1px; font-size: 16px; margin: 0 8px; padding: 8px }
+input.button { background-color: WhiteSmoke; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; font-family: Arial, Helvetica, Tahoma, sans-serif; font-size: 14px; font-weight: bold; padding: 8px 24px }
+h4 { color: Crimson; font-family: Monaco, Consolas, Courier, monospace; font-size: 14px; margin: 8% 0 0 0; padding: 0; text-align: center }
 
 h1 { border: solid Silver 0; border-bottom-width: 4px; margin: 0; padding: 16px 0 8px 0; text-align: center; white-space: nowrap }
 h1 label { position: relative }
@@ -45,6 +52,11 @@ ul li.nextLink { float: right }
 @media (orientation: portrait) {
 body { font-size: 20px }
 
+h3 { font-size: 20px; margin: 24% 0 8% 0 }
+input { font-size: 14px; left: 8px; margin: 0; padding: 8px 4px; position: absolute; right: 86px }
+input.button { border-radius: 0; -moz-border-radius: 0; -webkit-border-radius: 0; left: auto; margin: 6px 0; padding: 0; position: absolute; right: 8px }
+h4 { font-size: 14px; margin: 32% 0 0 0 }
+
 h1 { font-size: 22px; padding: 16px 0 }
 h1 label::after { bottom: -20px; left: 62%; margin: 0 }
 ol { padding: 4px }
@@ -63,6 +75,11 @@ ul li.nextLink a { background-image: url("data:image/png;base64,iVBORw0KGgoAAAAN
 
 @media (max-device-width: 999px) and (orientation: landscape) {
 body { font-size: 18px }
+
+h3 { font-size: 28px; margin: 4% 0 2% 0 }
+input { font-size: 14px; left: 8px; margin: 0; padding: 8px 4px; position: absolute; right: 86px }
+input.button { border-radius: 0; -moz-border-radius: 0; -webkit-border-radius: 0; left: auto; margin: 6px 0; padding: 0; position: absolute; right: 8px }
+h4 { font-size: 14px; margin: 16% 0 0 0 }
 
 h1 { font-size: 22px; padding: 8px 0 }
 ol { padding: 4px }

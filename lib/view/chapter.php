@@ -63,7 +63,7 @@ class Chapter extends Page
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>{$this->page->novelTitle} - {$this->page->title}</title>
+<title>{$this->page->novelTitle} - {$this->page->title} * CCNR</title>
 <link rel="stylesheet" media="screen" href="{$s_pshare}screen.css" />
 <link rel="icon" href="{$s_pshare}ccnr.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="{$s_pshare}ccnr.ico" type="image/x-icon" />
