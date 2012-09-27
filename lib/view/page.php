@@ -1,6 +1,6 @@
 <?php
 /**
- * Serves filtered novel chapters pages.
+ * Represents as abstract page view. THIS CLASS CANNOT BE INSTANTIATED.
  *
  * This file is part of NOVEL.READER.
  *
@@ -23,31 +23,29 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-require_once __DIR__ . '/../include/init.php';
+namespace NrView;
 
-$o_resp = NrResponse::singleton();
+use Exception;
+use NrView;
 
-if (!isset($_SERVER['QUERY_STRING']) || !strlen($_SERVER['QUERY_STRING']))
-    $o_resp->halt(200, new NrView\Assistant(''));
-
-if (strpos($_SERVER['QUERY_STRING'], ':/'))
-    $_SERVER['QUERY_STRING'] = str_replace(':/', '://', $_SERVER['QUERY_STRING']);
-
-try
+abstract class Page extends NrView
 {
-    $o_chapter = NrModel\Analyzer::parse($_SERVER['QUERY_STRING']);
+    /**
+     * Stores the novel page model instance.
+     *
+     * @var NrModel\Page
+     */
+    protected $page;
 
-    $o_page = $o_chapter instanceof NrModel\TOC ?
-        new NrView\TOC($o_chapter) :
-        new NrView\Chapter($o_chapter);
+    /**
+     * CONSTRUCT FUNCTION
+     *
+     * @param NrModel\Page $page
+     */
+    public function __construct(NrModel\Page $page)
+    {
+        $this->page = $page;
+    }
 }
-catch (Exception $ex)
-{
-    $o_resp->halt(400, new NrView\Assistant($_SERVER['QUERY_STRING'], $ex->getMessage()));
-}
-
-$o_resp->modifiedTime = $o_chapter->modifiedTime;
-$o_resp->compression = $_SERVER['HTTP_ACCEPT_ENCODING'];
-$o_resp->write($o_page)->close();
 
 # vim:se ft=php ff=unix fenc=utf-8 tw=120:

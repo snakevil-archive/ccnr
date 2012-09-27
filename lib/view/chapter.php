@@ -27,9 +27,8 @@ namespace NrView;
 
 use Exception;
 use NrModel;
-use NrView;
 
-class Chapter extends NrView
+class Chapter extends Page
 {
     /**
      * CONSTRUCT FUNCTION
@@ -56,6 +55,7 @@ class Chapter extends NrView
         if (false !== strpos($s_paragraphs, '![IMAGE]('))
             $s_paragraphs = preg_replace('@!\[IMAGE\]\((\S+)\)@U', '<img src="$1" />', $s_paragraphs);
         $a_tmp = count_chars($this->page->url, 1);
+        $s_pshare = (isset($a_tmp[47]) ? str_repeat('../', $a_tmp[47]) : '') . 'share/';
         $s_pshare = str_repeat('../', $a_tmp[47]) . 'share/';
         return <<<HTML
 <!DOCTYPE html>

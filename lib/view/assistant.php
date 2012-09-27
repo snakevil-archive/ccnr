@@ -1,6 +1,6 @@
 <?php
 /**
- * Represents as the novel TOC page view.
+ * Represents as the assistant view.
  *
  * This file is part of NOVEL.READER.
  *
@@ -26,20 +26,36 @@
 namespace NrView;
 
 use Exception;
-use NrModel;
+use NrView;
 
-class TOC extends Page
+class Assistant extends NrView
 {
+    /**
+     * Stores the tip message to be shown.
+     *
+     * @var string
+     */
+    protected $tip;
+
+    /**
+     * Stores the related URL.
+     *
+     * @var string
+     */
+    protected $url;
+
     /**
      * CONSTRUCT FUNCTION
      *
-     * OVERRIDEN FROM {@link NrView::__construct()}.
-     *
-     * @param NrModel\TOC $toc
+     * @param string $url
+     * @param string $tip OPTIONAL.
      */
-    public function __construct(NrModel\TOC $toc)
+    public function __construct($url, $tip = '')
     {
-        $this->page = $toc;
+        settype($url, 'string');
+        settype($tip, 'string');
+        $this->url = $url;
+        $this->tip = $tip;
     }
 
     /**
@@ -51,11 +67,7 @@ class TOC extends Page
      */
     public function __toString()
     {
-        $s_chapters = '<a href="' . implode("</a></li>\n<li><a href=\"", array_map(function($url, $title)
-                {
-                    return $url . '">' . $title;
-                }, array_keys($this->page->chapters), array_values($this->page->chapters))) . '</a>';
-        $a_tmp = count_chars($this->page->url, 1);
+        $a_tmp = count_chars($this->url, 1);
         $s_pshare = (isset($a_tmp[47]) ? str_repeat('../', $a_tmp[47]) : '') . 'share/';
         return <<<HTML
 <!DOCTYPE html>
@@ -63,16 +75,21 @@ class TOC extends Page
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>{$this->page->title}</title>
+<title>Clean & Clear Novel Reader</title>
 <link rel="stylesheet" media="screen" href="{$s_pshare}screen.css" />
 <link rel="icon" href="{$s_pshare}ccnr.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="{$s_pshare}ccnr.ico" type="image/x-icon" />
 </head>
 <body>
-<h1><label author="{$this->page->author}">{$this->page->title}</label></h1>
-<ol>
-<li>{$s_chapters}</li>
-</ol>
+<dl>
+<dd>
+<form action="?">
+<input name="s" type="text" />
+<input type="submit" value="Read" />
+</form>
+</dd>
+<dt>{$this->tip}</dt>
+</dl>
 </body>
 </html>
 HTML;

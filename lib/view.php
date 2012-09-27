@@ -1,6 +1,6 @@
 <?php
 /**
- * Represents as abstract page view. THIS CLASS CANNOT BE INSTANTIATED.
+ * Represents as abstract view. THIS CLASS CANNOT BE INSTANTIATED.
  *
  * This file is part of NOVEL.READER.
  *
@@ -25,23 +25,6 @@
 
 abstract class NrView
 {
-    /**
-     * Stores the novel page model instance.
-     *
-     * @var NrModel\Page
-     */
-    protected $page;
-
-    /**
-     * CONSTRUCT FUNCTION
-     *
-     * @param NrModel\page $page
-     */
-    public function __construct(NrModel\Page $page)
-    {
-        $this->page = $page;
-    }
-
     /**
      * Implements magic method.
      *

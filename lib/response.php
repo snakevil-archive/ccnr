@@ -141,22 +141,24 @@ class NrResponse
     /**
      * Halts all response content with specified status code.
      *
-     * @param  int  $status
+     * @param  int    $status
+     * @param  string $help OPTIONAL.
      * @return void
      */
-    public function halt($status)
+    public function halt($status, $help = '')
     {
         settype($status, 'int');
+        settype($help, 'string');
         $s_const = __CLASS__ . '::STATUS_' . $status;
-        if (200 != $status && defined($s_const))
+        if (301 != $status && 302 != $status && defined($s_const))
         {
             header('Status: ' . constant($s_const), true, $status);
-            echo '<h1>' . constant($s_const) . '</h1>';
+            echo strlen($help) ? $help : '<h1>' . constant($s_const) . '</h1>';
             exit(0);
         }
         header('Status: ' . static::STATUS_500, true, 500);
+        echo strlen($help) ? $help : '<h1>' . static::STATUS_500 . '</h1>';
         exit(0);
-        echo '<h1>' . static::STATUS_500 . '</h1>';
     }
 
     /**
