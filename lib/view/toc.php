@@ -66,8 +66,8 @@ class TOC extends NrView
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>{$this->page->title}</title>
 <link rel="stylesheet" media="screen" href="{$s_pshare}screen.css" />
-<link rel="icon" href="{$s_pshare}cnr.ico" type="image/x-icon" />
-<link rel="shortcut icon" href="{$s_pshare}cnr.ico" type="image/x-icon" />
+<link rel="icon" href="{$s_pshare}ccnr.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="{$s_pshare}ccnr.ico" type="image/x-icon" />
 </head>
 <body>
 <h1><label author="{$this->page->author}">{$this->page->title}</label></h1>
