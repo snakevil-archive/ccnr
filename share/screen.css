@@ -36,14 +36,14 @@ ol li { display: inline; float: left; margin: 4px 8px; overflow: hidden; padding
 h2 { background: Honeydew; border: solid Silver 0; border-bottom-width: 1px; margin: 0; overflow: hidden; padding: 8px 0 4px 0; position: fixed; text-align: center; white-space: nowrap; width: 750px }
 h2 a, h2 a:visited { color: DimGray }
 blockquote { margin: 0 auto; overflow: hidden; padding: 64px 0 8px 0; width: 720px }
-p { margin: 4px 0; padding: 0; text-indent: 2em }
+p { font-size: 18px; margin: 8px 0; padding: 0; text-indent: 2em }
 p img { display: block; margin: 0 auto }
 ul { list-style-type: none; margin: 0; overflow: hidden; padding: 0; position: fixed; top: 32px; width: 750px; z-index: 8 }
 ul li { display: inline; float: left; margin: 0 16px }
 ul li.nextLink { float: right }
 
 @media (orientation: portrait) {
-body { font-size: 18px }
+body { font-size: 20px }
 
 h1 { font-size: 22px; padding: 16px 0 }
 h1 label::after { bottom: -20px; left: 62%; margin: 0 }
@@ -52,7 +52,7 @@ ol li { margin: 2px 4px;  width: auto }
 
 h2 { font-size: 18px; left: 0; padding: 8px 40px 4px 40px; right: 0; text-overflow: ellipsis; width: auto }
 blockquote { padding: 48px 0 8px 0; width: auto }
-p { margin: 4px 8px }
+p { font-size: 20px; margin: 4px 8px }
 p img { width: 100%; height: auto }
 ul { font-size: 15px; position: static; top: auto; width: auto }
 ul li { left: 0; margin: 0 4px; position: fixed; top: 8px }
@@ -69,8 +69,8 @@ ol { padding: 4px }
 ol li { margin: 2px 4px;  width: auto }
 
 h2 { font-size: 18px; left: 0; padding: 4px 32px 0 32px; right: 0; width: auto }
-blockquote { padding: 48px 0 8px 0; width: auto }
-p { font-size: 10px; margin: 4px 8px }
+blockquote { padding: 40px 0 8px 0; width: auto }
+p { font-size: 12px; margin: 4px 8px }
 p img { width: 100%; height: auto }
 ul { font-size: 15px; position: static; top: auto; width: auto }
 ul li { left: 0; margin: 0 4px; position: fixed; top: 8px }
