@@ -1,6 +1,43 @@
-location ^~ /cnr/share/ {
-    alias           $document_root/cnr/share/;
+# Configs in NginX.
+#
+# This file is part of NOVEL.READER.
+#
+# NOVEL.READER is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# NOVEL.READER is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with NOVEL.READER.  If not, see <http://www.gnu.org/licenses/>.
+#
+# @package   novel.reader
+# @author    Snakevil Zen <zsnakevil@gmail.com>
+# @copyright © 2012 snakevil.in
+# @license   http://www.gnu.org/licenses/gpl.html
 
+# Q: HOWTO use any other code folder name, like `ccnr.git', rather than `ccnr'?
+# A:
+#    1. Changes the `ccnr' in the path of `alias' directive to the folder name
+#       you used;
+#    2. Uncomments the `alias' directive;
+#    3. Changes the `ccnr' in the path of `fastcgi_param' `SCRIPT_FILENAME'
+#       directive to the folder name you used;
+#    4. Saves and reloads the modification.
+#
+# Q: HOWTO use any other URI folder name, like `foo', rather than `ccnr' ?
+# A:
+#    1. Uncomments the `alias' directive;
+#    2. Changes the `ccnr' in the URI of all `location' directive to the URI
+#       folder name you want;
+#    3. Saves and reloads the modification.
+
+location ^~ /ccnr/share/ {
+    # alias          /var/www/ccnr/share;
     gzip            on;
     gzip_min_length 256;
     gzip_proxied    any;
@@ -10,11 +47,22 @@ location ^~ /cnr/share/ {
     expires         24h;
 }
 
-location ~ ^/cnr/(.*)$ {
+location ~ ^(/ccnr)/(.*)$ {
+    set             $ccnr_prefix    $1;
+    set             $ccnr_suffix    $2;
+    set             $ccnr_entry     /libexec/ccnr.php;
+    if ($args ~ "^s=(.*)$") {
+        set         $ccnr_suffix    $1;
+        set         $args           "";
+        rewrite     ^.*$            "${ccnr_prefix}/${ccnr_suffix}" redirect;
+    }
     fastcgi_pass    unix:/tmp/php5-fpm.socket;
     include         fastcgi_params;
-    fastcgi_param   SCRIPT_FILENAME $document_root/cnr/libexec/cnr.php;
-    fastcgi_param   QUERY_STRING    $1;
+    fastcgi_param   SCRIPT_FILENAME "${document_root}/ccnr${ccnr_entry}";
+    fastcgi_param   SCRIPT_NAME     $ccnr_entry;
+    fastcgi_param   REQUEST_URI     "${ccnr_prefix}/?${ccnr_suffix}";
+    fastcgi_param   DOCUMENT_URI    "${ccnr_prefix}/?${ccnr_suffix}";
+    fastcgi_param   QUERY_STRING    $ccnr_suffix;
 
     gzip            on;
     gzip_min_length 256;
@@ -23,3 +71,5 @@ location ~ ^/cnr/(.*)$ {
 
     expires         1h;
 }
+
+# vim: se ft=nginx ff=unix fenc=utf-8:
