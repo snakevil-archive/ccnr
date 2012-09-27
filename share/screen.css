@@ -28,7 +28,10 @@ a[href=""] { display: none }
 a:visited { color: DarkOrchid }
 a:hover { border-color: Black; color: Black !important }
 
-h3 { font-family: Georgia, "Times New Roman", serif; font-size: 48px; font-variant: small-caps; margin: 24% 0 4% 0; padding: 0; text-align: center }
+dl { border: solid Silver 2px; border-radius: 0 0 16px 16px; -moz-border-radius: 0 0 16px 16px; -webkit-border-radius: 0 0 16px 16px; border-top-width: 0; color: Silver; font-family: Arial, Helvetica, Tahoma, sans-serif; font-size: 12px; font-variant: small-caps; margin: 0; padding: 4px 0; position: absolute; right: 61%; top:0 }
+dd { margin: 0; padding: 0 8px }
+dd a { margin: 0 4px }
+h3 { color: Silver; font-family: Georgia, "Times New Roman", serif; font-size: 48px; font-variant: small-caps; margin: 24% 0 4% 0; padding: 0; text-align: center }
 form { margin: 0; padding: 0; text-align: center }
 input { border: solid Silver 1px; font-size: 16px; margin: 0 8px; padding: 8px }
 input.button { background-color: WhiteSmoke; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; font-family: Arial, Helvetica, Tahoma, sans-serif; font-size: 14px; font-weight: bold; padding: 8px 24px }
@@ -52,8 +55,9 @@ ul li.nextLink { float: right }
 @media (orientation: portrait) {
 body { font-size: 20px }
 
+dl { display: none }
 h3 { font-size: 20px; margin: 24% 0 8% 0 }
-input { font-size: 14px; left: 8px; margin: 0; padding: 8px 4px; position: absolute; right: 86px }
+input { font-size: 14px; left: 8px; margin: 0; padding: 8px 4px; position: absolute; right: 88px }
 input.button { border-radius: 0; -moz-border-radius: 0; -webkit-border-radius: 0; left: auto; margin: 6px 0; padding: 0; position: absolute; right: 8px }
 h4 { font-size: 14px; margin: 32% 0 0 0 }
 
@@ -76,8 +80,9 @@ ul li.nextLink a { background-image: url("data:image/png;base64,iVBORw0KGgoAAAAN
 @media (max-device-width: 999px) and (orientation: landscape) {
 body { font-size: 18px }
 
+dl { display: none }
 h3 { font-size: 28px; margin: 4% 0 2% 0 }
-input { font-size: 14px; left: 8px; margin: 0; padding: 8px 4px; position: absolute; right: 86px }
+input { font-size: 14px; left: 8px; margin: 0; padding: 8px 4px; position: absolute; right: 88px }
 input.button { border-radius: 0; -moz-border-radius: 0; -webkit-border-radius: 0; left: auto; margin: 6px 0; padding: 0; position: absolute; right: 8px }
 h4 { font-size: 14px; margin: 16% 0 0 0 }
 

@@ -67,6 +67,12 @@ class Assistant extends NrView
      */
     public function __toString()
     {
+        $b_ssl = isset($_SERVER['HTTPS']) && 'on' == $_SERVER['HTTPS'];
+        $s_url = ($b_ssl ? 'https' : 'http') .
+            '://' . $_SERVER['HTTP_HOST'] .
+            ($b_ssl ? (443 != $_SERVER['SERVER_PORT'] ? ':' . $_SERVER['SERVER_PORT'] : '') :
+                (80 != $_SERVER['SERVER_PORT'] ? ':' . $_SERVER['SERVER_PORT'] : '')) .
+            array_shift(explode('?', $_SERVER['REQUEST_URI']));
         $s_tip = (strlen($this->tip) ? '[WARNING] ' : '') . $this->tip;
         $a_tmp = count_chars($this->url, 1);
         $s_pshare = (isset($a_tmp[47]) ? str_repeat('../', $a_tmp[47]) : '') . 'share/';
@@ -82,10 +88,13 @@ class Assistant extends NrView
 <link rel="shortcut icon" href="{$s_pshare}ccnr.ico" type="image/x-icon" />
 </head>
 <body>
+<dl>
+<dd><span>Bookmarklet</span><a href="javascript:void((function(x,y){document.close();x.href.indexOf(y)&&x.assign(y+x.href)})(location,'{$s_url}'))">READ!</a><span>&#x2934;</span></dd>
+</dl>
 <h3>Clean & Clear Novel Reader</h3>
 <form action="?">
 <input name="s" type="text" size="64" placeholder="Paste/Type URL here and Go to..." />
-<input class="button" type="submit" value="READ" />
+<input class="button" type="submit" value="READ!" />
 </form>
 <h4>{$s_tip}</h4>
 </body>
