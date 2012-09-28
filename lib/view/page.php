@@ -26,6 +26,7 @@
 namespace NrView;
 
 use Exception;
+use NrModel;
 use NrView;
 
 abstract class Page extends NrView
@@ -40,10 +41,14 @@ abstract class Page extends NrView
     /**
      * CONSTRUCT FUNCTION
      *
+     * OVERRIDEN FROM {@link NrView::__construct()}.
+     *
+     * @param string       $uri
      * @param NrModel\Page $page
      */
-    public function __construct(NrModel\Page $page)
+    public function __construct($uri, NrModel\Page $page)
     {
+        parent::__construct($uri);
         $this->page = $page;
     }
 }

@@ -35,11 +35,12 @@ class Chapter extends Page
      *
      * OVERRIDEN FROM {@link NrView::__construct()}.
      *
+     * @param string      $uri
      * @param NrModel\Chapter $chapter
      */
-    public function __construct(NrModel\Chapter $chapter)
+    public function __construct($uri, NrModel\Chapter $chapter)
     {
-        $this->page = $chapter;
+        parent::__construct($uri, $chapter);
     }
 
     /**
@@ -55,8 +56,6 @@ class Chapter extends Page
         if (false !== strpos($s_paragraphs, '![IMAGE]('))
             $s_paragraphs = preg_replace('@!\[IMAGE\]\((\S+)\)@U', '<img src="$1" />', $s_paragraphs);
         $a_tmp = count_chars($this->page->url, 1);
-        $s_pshare = (isset($a_tmp[47]) ? str_repeat('../', $a_tmp[47]) : '') . 'share/';
-        $s_pshare = str_repeat('../', $a_tmp[47]) . 'share/';
         return <<<HTML
 <!DOCTYPE html>
 <html>
@@ -64,9 +63,9 @@ class Chapter extends Page
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>{$this->page->novelTitle} - {$this->page->title} * CCNR</title>
-<link rel="stylesheet" media="screen" href="{$s_pshare}screen.css" />
-<link rel="icon" href="{$s_pshare}ccnr.ico" type="image/x-icon" />
-<link rel="shortcut icon" href="{$s_pshare}ccnr.ico" type="image/x-icon" />
+<link rel="stylesheet" media="screen" href="{$this->uri}share/screen.css" />
+<link rel="icon" href="{$this->uri}share/ccnr.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="{$this->uri}share/ccnr.ico" type="image/x-icon" />
 <script language="Javascript">
 function navpage(ev) {
     ev = ev || window.event;

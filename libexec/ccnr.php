@@ -28,7 +28,7 @@ require_once __DIR__ . '/../include/init.php';
 $o_resp = NrResponse::singleton();
 
 if (!isset($_SERVER['QUERY_STRING']) || !strlen($_SERVER['QUERY_STRING']))
-    $o_resp->halt(200, new NrView\Assistant(''));
+    $o_resp->halt(200, new NrView\Assistant($_SERVER['REQUEST_URI']));
 
 if (strpos($_SERVER['QUERY_STRING'], ':/'))
     $_SERVER['QUERY_STRING'] = str_replace(':/', '://', $_SERVER['QUERY_STRING']);
@@ -38,12 +38,12 @@ try
     $o_chapter = NrModel\Analyzer::parse($_SERVER['QUERY_STRING']);
 
     $o_page = $o_chapter instanceof NrModel\TOC ?
-        new NrView\TOC($o_chapter) :
-        new NrView\Chapter($o_chapter);
+        new NrView\TOC($_SERVER['REQUEST_URI'], $o_chapter) :
+        new NrView\Chapter($_SERVER['REQUEST_URI'], $o_chapter);
 }
 catch (Exception $ex)
 {
-    $o_resp->halt(400, new NrView\Assistant($_SERVER['QUERY_STRING'], $ex->getMessage()));
+    $o_resp->halt(400, new NrView\Assistant($_SERVER['REQUEST_URI'], $ex->getMessage()));
 }
 
 $o_resp->modifiedTime = $o_chapter->modifiedTime;

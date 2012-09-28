@@ -35,11 +35,12 @@ class TOC extends Page
      *
      * OVERRIDEN FROM {@link NrView::__construct()}.
      *
+     * @param string      $uri
      * @param NrModel\TOC $toc
      */
-    public function __construct(NrModel\TOC $toc)
+    public function __construct($uri, NrModel\TOC $toc)
     {
-        $this->page = $toc;
+        parent::__construct($uri, $toc);
     }
 
     /**
@@ -55,8 +56,6 @@ class TOC extends Page
                 {
                     return $url . '">' . $title;
                 }, array_keys($this->page->chapters), array_values($this->page->chapters))) . '</a>';
-        $a_tmp = count_chars($this->page->url, 1);
-        $s_pshare = (isset($a_tmp[47]) ? str_repeat('../', $a_tmp[47]) : '') . 'share/';
         return <<<HTML
 <!DOCTYPE html>
 <html>
@@ -64,9 +63,9 @@ class TOC extends Page
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>{$this->page->title} * CCNR</title>
-<link rel="stylesheet" media="screen" href="{$s_pshare}screen.css" />
-<link rel="icon" href="{$s_pshare}ccnr.ico" type="image/x-icon" />
-<link rel="shortcut icon" href="{$s_pshare}ccnr.ico" type="image/x-icon" />
+<link rel="stylesheet" media="screen" href="{$this->uri}share/screen.css" />
+<link rel="icon" href="{$this->uri}share/ccnr.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="{$this->uri}share/ccnr.ico" type="image/x-icon" />
 </head>
 <body>
 <h1><label author="{$this->page->author}">{$this->page->title}</label></h1>

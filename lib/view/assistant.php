@@ -38,23 +38,17 @@ class Assistant extends NrView
     protected $tip;
 
     /**
-     * Stores the related URL.
-     *
-     * @var string
-     */
-    protected $url;
-
-    /**
      * CONSTRUCT FUNCTION
      *
-     * @param string $url
+     * OVERRIDEN FROM {@link NrView::__construct()}.
+     *
+     * @param string $uri
      * @param string $tip OPTIONAL.
      */
-    public function __construct($url, $tip = '')
+    public function __construct($uri, $tip = '')
     {
-        settype($url, 'string');
+        parent::__construct($uri);
         settype($tip, 'string');
-        $this->url = $url;
         $this->tip = $tip;
     }
 
@@ -72,10 +66,8 @@ class Assistant extends NrView
             '://' . $_SERVER['HTTP_HOST'] .
             ($b_ssl ? (443 != $_SERVER['SERVER_PORT'] ? ':' . $_SERVER['SERVER_PORT'] : '') :
                 (80 != $_SERVER['SERVER_PORT'] ? ':' . $_SERVER['SERVER_PORT'] : '')) .
-            array_shift(explode('?', $_SERVER['REQUEST_URI']));
+            $this->uri;
         $s_tip = (strlen($this->tip) ? '[WARNING] ' : '') . $this->tip;
-        $a_tmp = count_chars($this->url, 1);
-        $s_pshare = (isset($a_tmp[47]) ? str_repeat('../', $a_tmp[47]) : '') . 'share/';
         return <<<HTML
 <!DOCTYPE html>
 <html>
@@ -83,9 +75,9 @@ class Assistant extends NrView
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>CCNR</title>
-<link rel="stylesheet" media="screen" href="{$s_pshare}screen.css" />
-<link rel="icon" href="{$s_pshare}ccnr.ico" type="image/x-icon" />
-<link rel="shortcut icon" href="{$s_pshare}ccnr.ico" type="image/x-icon" />
+<link rel="stylesheet" media="screen" href="{$this->uri}share/screen.css" />
+<link rel="icon" href="{$this->uri}share/ccnr.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="{$this->uri}share/ccnr.ico" type="image/x-icon" />
 </head>
 <body>
 <dl>

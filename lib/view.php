@@ -26,6 +26,24 @@
 abstract class NrView
 {
     /**
+     * Stores the request URI.
+     *
+     * @var string
+     */
+    protected $uri;
+
+    /**
+     * CONSTRUCT FUNCTION
+     *
+     * @param  string $uri
+     */
+    public function __construct($uri)
+    {
+        settype($uri, 'string');
+        $this->uri = array_shift(explode('?', $uri));
+    }
+
+    /**
      * Implements magic method.
      *
      * THIS METHOD MUST BE OVERRIDEN.
