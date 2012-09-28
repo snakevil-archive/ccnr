@@ -88,6 +88,7 @@ function navpage(ev) {
 <li><a href="{$this->page->prevLink}">上一章</a></li>
 <li class="nextLink"><a href="{$this->page->nextLink}">下一章</a></li>
 </ul>
+<fieldset><img src="{$this->page->nextLink}" /></fieldset>
 </body>
 </html>
 HTML;

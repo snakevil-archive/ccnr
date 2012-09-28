@@ -51,6 +51,7 @@ p img { display: block; margin: 0 auto }
 ul { list-style-type: none; margin: 0; overflow: hidden; padding: 0; position: fixed; top: 32px; width: 750px; z-index: 8 }
 ul li { display: inline; float: left; margin: 0 16px }
 ul li.nextLink { float: right }
+fieldset { display: none }
 
 @media (max-device-width: 999px) and (orientation: portrait) {
 body { font-size: 20px; width: auto }
