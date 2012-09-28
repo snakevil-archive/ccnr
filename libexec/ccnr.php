@@ -43,7 +43,7 @@ try
 }
 catch (Exception $ex)
 {
-    $o_resp->halt(400, new NrView\Assistant($_SERVER['REQUEST_URI'], $ex->getMessage()));
+    $o_resp->halt(504, new NrView\Assistant($_SERVER['REQUEST_URI'], $ex->getMessage()));
 }
 
 $o_resp->modifiedTime = $o_chapter->modifiedTime;

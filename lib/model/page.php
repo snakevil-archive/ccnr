@@ -71,23 +71,20 @@ abstract class Page
             throw new Exception('Dismatched URL.');
         $r_page = curl_init($url);
         $b_ret = is_resource($r_page);
-        if ($b_ret)
-            $b_ret = curl_setopt_array($r_page, array(CURLOPT_FILETIME => true,
-                    CURLOPT_FORBID_REUSE => true,
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => '',
-                    CURLOPT_USERAGENT => 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.19 (KHTML, like Gecko) ' .
-                        'Ubuntu/11.10 Chromium/18.0.1025.168 Chrome/18.0.1025.168 Safari/535.19'
-                ));
-        if ($b_ret)
-        {
-            $s_page = curl_exec($r_page);
-            $this->modifiedTime = curl_getinfo($r_page, CURLINFO_FILETIME);
-            $b_ret = is_string($s_page);
-            curl_close($r_page);
-        }
         if (!$b_ret)
-            throw new Exception('Failed to load page content.');
+            throw new Exception('Failed to initialize HTTP reader.');
+        curl_setopt_array($r_page, array(CURLOPT_FILETIME => true,
+                CURLOPT_FORBID_REUSE => true,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => 'gzip,deflate',
+                CURLOPT_USERAGENT => 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.19 (KHTML, like Gecko) ' .
+                    'Ubuntu/11.10 Chromium/18.0.1025.168 Chrome/18.0.1025.168 Safari/535.19'
+            ));
+        $s_page = curl_exec($r_page);
+        if (false === $s_page)
+            throw new Exception('HTTP Reader: ' . ucfirst(curl_error($r_page)) . '.');
+        $this->modifiedTime = curl_getinfo($r_page, CURLINFO_FILETIME);
+        curl_close($r_page);
         $this->url = $url;
         $this->parse($s_page);
     }
