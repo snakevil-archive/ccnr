@@ -33,6 +33,8 @@ if (!isset($_SERVER['QUERY_STRING']) || !strlen($_SERVER['QUERY_STRING']))
 if (strpos($_SERVER['QUERY_STRING'], ':/'))
     $_SERVER['QUERY_STRING'] = str_replace(':/', '://', $_SERVER['QUERY_STRING']);
 
+$_SERVER['REQUEST_URI'] = str_replace($_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
+
 try
 {
     $o_chapter = NrModel\Analyzer::parse($_SERVER['QUERY_STRING']);
@@ -46,8 +48,6 @@ catch (Exception $ex)
     $o_resp->halt(504, new NrView\Assistant($_SERVER['REQUEST_URI'], $ex->getMessage()));
 }
 
-$o_resp->modifiedTime = $o_chapter->modifiedTime;
-$o_resp->compression = $_SERVER['HTTP_ACCEPT_ENCODING'];
 $o_resp->write($o_page)->close();
 
 # vim:se ft=php ff=unix fenc=utf-8 tw=120:

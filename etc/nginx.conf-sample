@@ -22,22 +22,22 @@
 
 # Q: HOWTO use any other code folder name, like `ccnr.git', rather than `ccnr'?
 # A:
-#    1. Changes the `ccnr' in the path of `alias' directive to the folder name
-#       you used;
-#    2. Uncomments the `alias' directive;
-#    3. Changes the `ccnr' in the path of `fastcgi_param' `SCRIPT_FILENAME'
-#       directive to the folder name you used;
-#    4. Saves and reloads the modification.
+#    1. Adds an `alias' directive into `location ^~ /ccnr/share' as the head
+#       line;
+#    2. Changes `$1' in every `rewrite' directive in `location ~ ^/ccnr/' to
+#       the name you want beginning with a `/';
+#    3. Saves and reloads.
 #
 # Q: HOWTO use any other URI folder name, like `foo', rather than `ccnr' ?
 # A:
-#    1. Uncomments the `alias' directive;
-#    2. Changes the `ccnr' in the URI of all `location' directive to the URI
-#       folder name you want;
-#    3. Saves and reloads the modification.
+#    1. Changes `ccnr' in every `location' directive to the name you want;
+#    2. Adds an `alias' directive into `location ^~ /ccnr/share' as the head
+#       line;
+#    3. Changes `$1' in every `rewrite' directive in `location ~ ^/ccnr/' to
+#       `/ccnr';
+#    4. Saves and reloads.
 
 location ^~ /ccnr/share/ {
-    # alias          /var/www/ccnr/share;
     gzip            on;
     gzip_min_length 256;
     gzip_proxied    any;
@@ -47,22 +47,15 @@ location ^~ /ccnr/share/ {
     expires         24h;
 }
 
-location ~ ^(/ccnr)/(.*)$ {
-    set             $ccnr_prefix    $1;
-    set             $ccnr_suffix    $2;
-    set             $ccnr_entry     /libexec/ccnr.php;
-    if ($args ~ "^s=(.*)$") {
-        set         $ccnr_suffix    $1;
-        set         $args           "";
-        rewrite     ^.*$            "${ccnr_prefix}/${ccnr_suffix}" redirect;
+location ~ ^/ccnr/ {
+    rewrite_log     on;
+    rewrite         ^(/[^/]*)/api/(.*)$ $1/libexec/api/$2.php last;
+    if ($query_string ~ "^s=(.*)$") {
+        set         $ccnr_args $1;
+        set         $args "";
+        rewrite     ^(/[^/]*)/$ $1/$ccnr_args redirect;
     }
-    fastcgi_pass    unix:/tmp/php5-fpm.socket;
-    include         fastcgi_params;
-    fastcgi_param   SCRIPT_FILENAME "${document_root}/ccnr${ccnr_entry}";
-    fastcgi_param   SCRIPT_NAME     $ccnr_entry;
-    fastcgi_param   REQUEST_URI     "${ccnr_prefix}/?${ccnr_suffix}";
-    fastcgi_param   DOCUMENT_URI    "${ccnr_prefix}/?${ccnr_suffix}";
-    fastcgi_param   QUERY_STRING    $ccnr_suffix;
+    rewrite         ^(/[^/]*)/(.*)$ $1/libexec/main.php?$2 last;
 
     gzip            on;
     gzip_min_length 256;
