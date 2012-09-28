@@ -22,7 +22,7 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-body { background: Honeydew; color: DimGray; font: 16px/1.8 Helvetica, "Microsoft Yahei", Arial, sans-serif; margin: 0 auto; max-width: 750px }
+body { background: Honeydew; color: DimGray; font: 16px/1.8 Helvetica, "Microsoft Yahei", Arial, sans-serif; margin: 0 auto; width: 750px }
 a { border: dashed Honeydew 0; border-bottom-width: 1px; color: RoyalBlue; line-height: 1.5; text-decoration: none }
 a[href=""] { display: none }
 a:visited { color: DarkOrchid }
@@ -52,8 +52,8 @@ ul { list-style-type: none; margin: 0; overflow: hidden; padding: 0; position: f
 ul li { display: inline; float: left; margin: 0 16px }
 ul li.nextLink { float: right }
 
-@media (orientation: portrait) {
-body { font-size: 20px }
+@media (max-device-width: 999px) and (orientation: portrait) {
+body { font-size: 20px; width: auto }
 
 dl { display: none }
 h3 { font-size: 20px; margin: 24% 0 8% 0 }
@@ -78,7 +78,7 @@ ul li.nextLink a { background-image: url("data:image/png;base64,iVBORw0KGgoAAAAN
 }
 
 @media (max-device-width: 999px) and (orientation: landscape) {
-body { font-size: 18px }
+body { font-size: 18px; width: auto }
 
 dl { display: none }
 h3 { font-size: 28px; margin: 4% 0 2% 0 }
