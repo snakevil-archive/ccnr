@@ -81,7 +81,7 @@ class Assistant extends NrView
 </head>
 <body>
 <dl>
-<dd><span>Bookmarklet</span><a href="javascript:void((function(x,y){document.close();x.href.indexOf(y)&&x.assign(y+x.href)})(location,'{$s_url}'))">READ!</a><span>&#x2934;</span></dd>
+<dd><span>Bookmarklet</span><a href="javascript:void((function(x,y){document.close();x.href.indexOf(y)&&x.assign(y+x.href.substr(7))})(location,'{$s_url}'))">READ!</a><span>&#x2934;</span></dd>
 </dl>
 <h3>Clean & Clear Novel Reader</h3>
 <form action="?">

@@ -31,9 +31,15 @@ if (!isset($_SERVER['QUERY_STRING']) || !strlen($_SERVER['QUERY_STRING']))
     $o_resp->halt(200, new NrView\Assistant($_SERVER['REQUEST_URI']));
 
 if (strpos($_SERVER['QUERY_STRING'], ':/'))
+{
     $_SERVER['QUERY_STRING'] = str_replace(':/', '://', $_SERVER['QUERY_STRING']);
-
-$_SERVER['REQUEST_URI'] = str_replace($_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
+    $_SERVER['REQUEST_URI'] = str_replace($_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
+}
+else
+{
+    $_SERVER['REQUEST_URI'] = str_replace($_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
+    $_SERVER['QUERY_STRING'] = 'http://' . $_SERVER['QUERY_STRING'];
+}
 
 try
 {
