@@ -64,7 +64,7 @@ class Chapter extends NrView\Data
                 'novelTitle' => $this->meta->novelTitle,
                 'paragraphs' => $this->meta->paragraphs,
                 'links' => array('toc' => $this->meta->tocLink,
-                    'previos' => $this->meta->prevLink,
+                    'previous' => $this->meta->prevLink,
                     'next' => $this->meta->nextLink
                 )
             );
