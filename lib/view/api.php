@@ -72,7 +72,7 @@ class API extends NrView
     {
         return json_encode(array('code' => $this->code,
                 'referer' => $this->uri,
-                'data' => $this->data->jsonSerialize()
+                'data' => $this->data instanceof Data ? $this->data->jsonSerialize() : NULL
             ));
     }
 }
