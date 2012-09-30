@@ -50,7 +50,7 @@ location ^~ /ccnr/share/ {
 location ~ ^/ccnr/ {
     rewrite_log     on;
     rewrite         ^(/[^/]*)/api/(.*)$ $1/libexec/api/$2.php last;
-    if ($query_string ~ "^s=(.*)$") {
+    if ($query_string ~ "^s=http%3A%2F%2F(.*)$") {
         set         $ccnr_args $1;
         set         $args "";
         rewrite     ^(/[^/]*)/$ $1/$ccnr_args redirect;
