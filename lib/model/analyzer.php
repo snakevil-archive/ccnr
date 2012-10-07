@@ -61,8 +61,25 @@ abstract class Analyzer
         if (!class_exists($s_ctoc))
             throw new Exception('Unsupported source.');
         if (call_user_func(array($s_ctoc, 'validate'), $url))
-            return new $s_ctoc($url);
-        return new $s_cchp($url);
+        {
+            $o_toc = new $s_ctoc($url);
+            if (is_string($o_toc->title) && strlen($o_toc->title) &&
+                is_string($o_toc->author) && strlen($o_toc->author) &&
+                is_array($o_toc->chapters) && count($o_toc->chapters))
+                return $o_toc;
+        }
+        else
+        {
+            $o_chp = new $s_cchp($url);
+            if (is_string($o_chp->title) && strlen($o_chp->title) &&
+                is_string($o_chp->novelTitle) && strlen($o_chp->novelTitle) &&
+                is_array($o_chp->paragraphs) && count($o_chp->paragraphs) &&
+                is_string($o_chp->tocLink) && strlen($o_chp->tocLink) &&
+                (is_string($o_chp->prevLink) && strlen($o_chp->prevLink) ||
+                    is_string($o_chp->nextLink) && strlen($o_chp->nextLink)))
+                return $o_chp;
+        }
+        throw new Exception('Expired source analyzer.');
     }
 }
 
