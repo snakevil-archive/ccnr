@@ -70,7 +70,7 @@ class Chapter extends Page
 _ = {
     v : false,
     l : location.href,
-    t : "{$this->page->tocLink}",
+    x : "{$this->page->tocLink}",
     s : {
         t : [document.title, ""],
         b : "",
@@ -83,7 +83,7 @@ function navpage(ev) {
     ev = ev || window.event;
     switch (ev.keyCode) {
         case 13:
-            location.href = _.t;
+            location.href = _.x;
             break;
         case 37:
             if (document.getElementById("prevLink"))
@@ -145,8 +145,10 @@ if (_.s.n.length) {
                 i.onload = function () {
                     try {
                         var j = JSON.parse(i.responseText);
-                        if (200 != j.code || x != j.referer)
+                        if (200 != j.code || x != j.referer) {
+                            document.getElementById("nextLink").href = "#" + y;
                             return;
+                        }
                         _.t = {
                             t : [
                                 j.data.novelTitle + " - " + j.data.title + " * CCNR",
@@ -195,7 +197,8 @@ if (_.s.n.length) {
                 }
                 _.d(null == ev.state ? _.s : ev.state);
             };
-            _.g(_.s.n, _.s.r);
+            if (_.s.n.length && '#' != _.s.n[0])
+                _.g(_.s.n, _.s.r);
         })();
     } else {
         (function (x) {
