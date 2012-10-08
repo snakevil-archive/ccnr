@@ -88,18 +88,14 @@ function navpage(ev) {
         case 37:
             if (document.getElementById("prevLink"))
                 document.getElementById("prevLink").click();
-            else if (_.s.p.length) {
-                console.log("prev");
+            else if (_.s.p.length)
                 location.href = _.s.p;
-            }
             break;
         case 39:
             if (document.getElementById("nextLink"))
                 document.getElementById("nextLink").click();
-            else if (_.s.n.length) {
-                console.log("next");
+            else if (_.s.n.length)
                 location.href = _.s.n;
-            }
             break;
 }}
 </script>
@@ -145,7 +141,7 @@ if (_.s.n.length) {
                 }
             },
             _.g = function (x, y) {
-                var i = new XMLHttpRequest;
+                var i = x, x = _.c(y, x), y = i, i = new XMLHttpRequest;
                 i.onload = function () {
                     try {
                         var j = JSON.parse(i.responseText);
@@ -159,7 +155,8 @@ if (_.s.n.length) {
                             b : "",
                             p : j.data.links.previous,
                             n : j.data.links.next,
-                            r : j.referer
+                            r : x,
+                            i : y
                         };
                         for (var k = 0; k < j.data.paragraphs.length; k++)
                             if ("![IMAGE](" == j.data.paragraphs[k].substr(0, 9))
@@ -176,9 +173,15 @@ if (_.s.n.length) {
                 if (!_.t)
                     return;
                 ev.preventDefault();
-                history.pushState(_.t, _.t.t[0], _.t.n);
-                _.d(_.t);
-                _.g(_.c(_.t.r, _.t.n), _.c(_.l, _.t.n));
+                if (_.d.l)
+                    return;
+                _.d.l = _.t.i;
+                var t = _.t;
+                history.pushState(t, t.t[0], t.i);
+                _.d(t);
+                delete _.d.l;
+                delete _.t;
+                _.g(t.n, t.r);
             },
             window.onpopstate = function (ev) {
                 if (!_.v) {
@@ -187,7 +190,7 @@ if (_.s.n.length) {
                 }
                 _.d(null == ev.state ? _.s : ev.state);
             };
-            _.g(_.c(_.s.r, _.s.n), _.c(_.l, _.s.n));
+            _.g(_.s.n, _.s.r);
         })();
     } else {
         (function (x) {
