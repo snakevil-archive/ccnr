@@ -158,11 +158,16 @@ if (_.s.n.length) {
                             r : x,
                             i : y
                         };
-                        for (var k = 0; k < j.data.paragraphs.length; k++)
-                            if ("![IMAGE](" == j.data.paragraphs[k].substr(0, 9))
-                                _.t.b += "<p><img src=\"" + j.data.paragraphs[k].substr(9, -1) + "\"/></p>";
-                            else
-                                _.t.b += "<p>" + j.data.paragraphs[k] + "</p>";
+                        var k = [];
+                        for (var l = 0; l < j.data.paragraphs.length; l++)
+                            if ("![IMAGE](" == j.data.paragraphs[l].substr(0, 9)) {
+                                k[k.length] = j.data.paragraphs[l].substring(9, j.data.paragraphs[l].length - 1);
+                                _.t.b += "<p><img src=\"" + k[k.length - 1] + "\"/></p>";
+                            } else
+                                _.t.b += "<p>" + j.data.paragraphs[l] + "</p>";
+                        document.body.appendChild(document.createElement("fieldset")).
+                            appendChild(document.createElement("img")).
+                            src = k[0];
                     } catch (ex) {
                     }
                 };
