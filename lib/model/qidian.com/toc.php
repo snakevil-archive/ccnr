@@ -55,7 +55,7 @@ class TOC extends NrModel\TOC
             return $this;
         list($this->title, $this->author) = explode('-', $s_ret);
         $s_ret = $this->crop('@<div id="content">@', '@</ul></div></div>\s*</div>@', $content);
-        $s_ex = '@<li style=\'width:25%;\'>' .
+        $s_ex = '@<li style=\'width:\d+%;\'>' .
             '<a(?:| rel="nofollow") href="(.*\d+,\d+\.aspx)" title=\'[^\']*\'(?:| target=\'_blank\')>' .
             '(.*)' .
             '</a></li>@U';
