@@ -68,8 +68,15 @@ class Chapter extends NrModel\Chapter
         if (false === $s_ret)
             return $this;
         $this->nextLink = array_pop(explode('/BookReader/', $s_ret));
-        if (0 === strpos($this->nextLink, 'v'))
-            $this->nextLink = '#' . array_shift(explode('.', array_pop(explode(',', $this->nextLink))));
+        switch ($this->nextLink[0])
+        {
+            case 'v':
+                $this->nextLink = '#' . array_shift(explode('.', array_pop(explode(',', $this->nextLink))));
+                break;
+            case 'B':
+                $this->nextLink = '#' . array_pop(explode('chapterId=', $this->nextLink));
+                break;
+        }
         $s_ret = $this->crop('@<script src=\'@', '@\'  charset=\'GB2312\'></script>@', $content);
         if (false === $s_ret)
             return $this;
