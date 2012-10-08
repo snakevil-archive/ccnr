@@ -87,9 +87,10 @@ class Chapter extends NrModel\Chapter
             return $this;
         $a_tmp = preg_split('@\s*<p>\s*@', $s_ret);
         $this->paragraphs = array();
+        var_dump($a_tmp);
         for ($ii = 0, $jj = count($a_tmp); $ii < $jj; $ii++)
         {
-            $a_tmp[$ii] = trim($a_tmp[$ii]);
+            $a_tmp[$ii] = trim($a_tmp[$ii], '　');
             if (strlen($a_tmp[$ii]))
                 $this->paragraphs[] = $a_tmp[$ii];
         }

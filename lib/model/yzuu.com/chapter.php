@@ -70,7 +70,7 @@ class Chapter extends NrModel\Chapter
             $a_tmp = preg_split('@(<br>)+(&nbsp;)*@', $s_ret);
             for ($ii = 0, $jj = count($a_tmp); $ii < $jj; $ii++)
             {
-                $a_tmp[$ii] = trim($a_tmp[$ii]);
+                $a_tmp[$ii] = trim($a_tmp[$ii], '　');
                 if (strlen($a_tmp[$ii]))
                     $this->paragraphs[] = $a_tmp[$ii];
             }
