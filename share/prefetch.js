@@ -117,6 +117,7 @@ if (_ && _.$ && _.n && _.n.length && "#" != _.n[0]) {
 				this.onclick.locked = true;
 				history.pushState(y, y.t[0], x);
 				_.d(y);
+				window.scrollTo(0, 0);
 				delete this.onclick.locked;
 				_.g(y.n, _.r);
 			};
