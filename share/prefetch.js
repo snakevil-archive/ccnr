@@ -53,6 +53,7 @@ if (_ && _.$ && _.n && _.n.length && "#" != _.n[0]) {
 				_.$("nextLink").href = _.n = x.n;
 			};
 			_.g = function (x, y) {
+				if (!x || !y) return;
 				var i = _.c(location.href, x);
 				if (_.h.has(i)) return;
 				var j = new XMLHttpRequest;
