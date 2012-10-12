@@ -71,13 +71,13 @@ class Chapter extends NrModel\Chapter
         if (false === $s_ret)
             return $this;
         $this->prevLink = $s_ret;
-        if ('index.html' == $this->prevLink)
+        if ('./' == $this->prevLink)
             $this->prevLink = '';
         $s_ret = $this->crop('@>返回目录</a>\s*<a href="@', '@">下一章</a>@', $content);
         if (false === $s_ret)
             return $this;
         $this->nextLink = $s_ret;
-        if ('index.html' == $this->nextLink)
+        if ('./' == $this->nextLink)
             $this->nextLink = '';
         return $this;
     }
