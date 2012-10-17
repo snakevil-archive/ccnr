@@ -20,7 +20,7 @@
  *
  * @package   novel.reader
  * @author    Snakevil Zen <zsnakevil@gmail.com>
- * @copyright © 2012 snakevil.in
+ * @copyright © 2012 szen.in
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
