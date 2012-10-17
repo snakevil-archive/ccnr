@@ -59,7 +59,7 @@ class TOC extends NrModel\TOC
         if (false === $s_ret)
             return $this;
         $this->author = $s_ret;
-        $s_ret = $this->crop('@<td colspan="4" class="vcss">\s*章节目录\s*</td>@', '@<div id="box"><h2>Tags：<a href="@', $content);
+        $s_ret = $this->crop('@<table border="0" align="center" cellpadding="3" cellspacing="1" class="acss">@', '@<div id="box"><h2>Tags：<a href="@', $content);
         if (false === $s_ret ||
             false === preg_match_all('@<td class="ccss">\s*<a href="(\d+\.html)">(.*)</a>\s*</td>@U', $s_ret, $a_tmp)
         )

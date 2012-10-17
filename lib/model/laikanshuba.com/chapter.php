@@ -72,16 +72,24 @@ class Chapter extends NrModel\Chapter
         if (false === $s_ret)
             return $this;
         $this->title = $s_ret;
-        $s_ret = $this->crop('@<div id="content">(&nbsp;)*@', '@(</p>(&nbsp;)*)?</div>@', $content);
+        $s_ret = $this->crop('@<div id="content">(&nbsp;)*@', '@<center>@', $content);
         if (false === $s_ret)
             return $this;
         $this->paragraphs = array();
-        $a_tmp = preg_split('@(<br />\s*)+(&nbsp;)*(</p>)?@', $s_ret);
-        for ($ii = 0, $jj = count($a_tmp); $ii < $jj; $ii++)
+        if (!strpos($s_ret, '<img src="'))
         {
-            $a_tmp[$ii] = preg_replace('@^[　]+@u', '', $a_tmp[$ii]);
-            if (strlen($a_tmp[$ii]))
-                $this->paragraphs[] = $a_tmp[$ii];
+            $a_tmp = preg_split('@(<br />\s*)+(&nbsp;)*(</p>)?@', $s_ret);
+            for ($ii = 0, $jj = count($a_tmp); $ii < $jj; $ii++)
+            {
+                $a_tmp[$ii] = preg_replace('@^[　]+@u', '', $a_tmp[$ii]);
+                if (strlen($a_tmp[$ii]))
+                    $this->paragraphs[] = $a_tmp[$ii];
+            }
+        }
+        else if (preg_match_all('@<img src="([^\s"]+)" border="0" class="imagecontent">@', $s_ret, $a_tmp))
+        {
+            for ($ii = 0, $jj = count($a_tmp[0]); $ii < $jj; $ii++)
+                $this->paragraphs[] = '![IMAGE](' . $a_tmp[1][$ii] . ')';
         }
         return $this;
     }

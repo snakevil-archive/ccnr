@@ -81,7 +81,7 @@ class Chapter extends NrModel\Chapter
             return $this;
         $content = $this->read($s_ret);
         $content = iconv('gbk', 'utf-8//ignore', $content);
-        $s_ret = $this->crop('@document\.writeln\("(&nbsp;)*@', '@<br /><br />(&nbsp;)*</div>@', $content);
+        $s_ret = $this->crop('@document\.writeln\("(&nbsp;)*@', '@("\)|<br /><br />(&nbsp;)*</div>)@', $content);
         if (false === $s_ret)
             return $this;
         $this->paragraphs = array();

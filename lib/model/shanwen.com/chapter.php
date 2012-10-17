@@ -59,7 +59,7 @@ class Chapter extends NrModel\Chapter
         if (false === $s_ret)
             return $this;
         $this->title = $s_ret;
-        $s_ret = $this->crop('@<DIV id="content">(\s*&nbsp;)*@', '@<br />\s*<center>闪文欢迎您@', $content);
+        $s_ret = $this->crop('@<DIV id="content">(\s*&nbsp;)*@', '@<br />\s*(<center>|(&nbsp;)+)闪文@', $content);
         if (false === $s_ret)
             return $this;
         $this->paragraphs = array();
