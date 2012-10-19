@@ -51,14 +51,14 @@ class TOC extends Model\TOC
     {
         settype($content, 'string');
         $content = iconv('gbk', 'utf-8//ignore', $content);
-        $s_ret = $this->crop('@<dl class="pic">\s*<dt><img alt="@', '@" src="@', $content);
-        if (false === $s_ret)
-            return $this;
-        $this->title = $s_ret;
-        $s_ret = $this->crop('@作者：<a href="[^"]*" target="_blank">@', '@</a>@', $content);
+        $s_ret = $this->crop('@作者 <a>@', '@</a>@', $content);
         if (false === $s_ret)
             return $this;
         $this->author = $s_ret;
+        $s_ret = $this->crop('@<h1>@', '@</h1>@', $content);
+        if (false === $s_ret)
+            return $this;
+        $this->title = $s_ret;
         $s_ret = $this->crop('@<div class="content">\s*<ul>@', '@</ul>@', $content);
         if (false === $s_ret ||
             false === preg_match_all('@<li><a href="/\d+/(\d+\.html)">(.*)</a></li>@U', $s_ret, $a_tmp)
