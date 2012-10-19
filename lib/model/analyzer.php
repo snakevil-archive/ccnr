@@ -26,8 +26,6 @@
 
 namespace CCNR\Model;
 
-use Exception;
-
 abstract class Analyzer
 {
     /**
@@ -54,32 +52,16 @@ abstract class Analyzer
         settype($url, 'string');
         $s_host = parse_url($url, PHP_URL_HOST);
         if (!$s_host)
-            throw new Exception('Illegal URL without an host.');
+            throw new IllegalUrlException;
         $s_host = implode('_', array_slice(explode('.', $s_host), -2));
         $s_ctoc = 'CCNR\\Model\\' . $s_host . '\\TOC';
         $s_cchp = 'CCNR\\Model\\' . $s_host . '\\Chapter';
         if (!class_exists($s_ctoc))
-            throw new Exception('Unsupported source.');
+            throw new UnsupportedSourceException;
         if (call_user_func(array($s_ctoc, 'validate'), $url))
-        {
-            $o_toc = new $s_ctoc($url);
-            if (is_string($o_toc->title) && strlen($o_toc->title) &&
-                is_string($o_toc->author) && strlen($o_toc->author) &&
-                is_array($o_toc->chapters) && count($o_toc->chapters))
-                return $o_toc;
-        }
+            return new $s_ctoc($url);
         else
-        {
-            $o_chp = new $s_cchp($url);
-            if (is_string($o_chp->title) && strlen($o_chp->title) &&
-                is_string($o_chp->novelTitle) && strlen($o_chp->novelTitle) &&
-                is_array($o_chp->paragraphs) && count($o_chp->paragraphs) &&
-                is_string($o_chp->tocLink) && strlen($o_chp->tocLink) &&
-                (is_string($o_chp->prevLink) && strlen($o_chp->prevLink) ||
-                    is_string($o_chp->nextLink) && strlen($o_chp->nextLink)))
-                return $o_chp;
-        }
-        throw new Exception('Expired source analyzer.');
+            return new $s_cchp($url);
     }
 }
 

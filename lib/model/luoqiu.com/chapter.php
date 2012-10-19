@@ -25,7 +25,6 @@
 
 namespace CCNR\Model\Luoqiu_com;
 
-use Exception;
 use CCNR\Model;
 
 class Chapter extends Model\Chapter
@@ -53,15 +52,15 @@ class Chapter extends Model\Chapter
         $content = iconv('gbk', 'utf-8//ignore', $content);
         $s_ret = $this->crop('@<H1 class=bname_content>@', '@</H1>@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new ChapterTitleNotFoundException;
         $this->title = $s_ret;
         $s_ret = $this->crop('@书名：<a href=".*">@', '@</A>@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new NovelTitleNotFoundException;
         $this->novelTitle = $s_ret;
         $s_ret = $this->crop('@<DIV id=content name="content">(\s*&nbsp;)*@', '@(&nbsp;\s*)*(</p>\s*)?<p></DIV>@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new ParagraphsNotFoundException;
         $this->paragraphs = array();
         if (!strpos($s_ret, '<img src="'))
         {
@@ -78,16 +77,18 @@ class Chapter extends Model\Chapter
             for ($ii = 0, $jj = count($a_tmp[0]); $ii < $jj; $ii++)
                 $this->paragraphs[] = '![IMAGE](' . $a_tmp[1][$ii] . ')';
         }
+        if (empty($this->paragraphs))
+            throw new ParagraphsNotFoundException;
         $this->tocLink = './';
         $s_ret = $this->crop('@\(快捷键:←\)\s*<A href="@', '@">上一页</A>@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new PrevLinkNotFoundException;
         $this->prevLink = $s_ret;
         if ('index.html' == $this->prevLink)
             $this->prevLink = '';
         $s_ret = $this->crop('@">回书目\(快捷键:Enter\)</A>(&nbsp\s*)*<A href="@', '@">下一页</A>@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new NextLinkNotFoundException;
         $this->nextLink = $s_ret;
         if ('index.html' == $this->nextLink)
             $this->nextLink = '';

@@ -25,7 +25,6 @@
 
 namespace CCNR\Model\Yzuu_com;
 
-use Exception;
 use CCNR\Model;
 
 class TOC extends Model\TOC
@@ -53,23 +52,25 @@ class TOC extends Model\TOC
         $content = iconv('gbk', 'utf-8//ignore', $content);
         $s_ret = $this->crop('@<h1 class="tc fred"><font size="6">@', '@</font></h1>@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new NovelTitleNotFoundException;
         $this->title = $s_ret;
         $s_ret = $this->crop('@<h3 class="tc">作者:&nbsp;@', '@&nbsp;&nbsp;最后更新：&nbsp;@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new AuthorNotFoundException;
         $this->author = $s_ret;
         $s_ret = $this->crop('@<h2 class="tc">正文</h2>\s*<ul>@', '@<div id="foot01">@', $content);
         if (false === $s_ret ||
             false === preg_match_all('@<li><a href="/look/\d+/(\d+)/".*>(.*)</a></li>@U', $s_ret, $a_tmp)
         )
-            return $this;
+            throw new ChaptersListingNotFoundException;
         $s_prefix = '/' == substr($this->url, -1) ? '' : basename($this->url) . '/';
         $this->chapters = array();
         for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
         {
             $this->chapters[$s_prefix . $a_tmp[1][$ii] . '/'] = $a_tmp[2][$ii];
         }
+        if (empty($this->chapters))
+            throw new ChaptersListingNotFoundException;
         return $this;
     }
 }

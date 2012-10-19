@@ -25,8 +25,6 @@
 
 namespace CCNR\Model;
 
-use Exception;
-
 abstract class TOC extends Page
 {
     /**

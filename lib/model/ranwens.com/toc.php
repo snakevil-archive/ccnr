@@ -25,7 +25,6 @@
 
 namespace CCNR\Model\Ranwens_com;
 
-use Exception;
 use CCNR\Model;
 
 class TOC extends Model\TOC
@@ -53,22 +52,24 @@ class TOC extends Model\TOC
         $content = iconv('gbk', 'utf-8//ignore', $content);
         $s_ret = $this->crop('@var articlename=\'@', '@\';@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new NovelTitleNotFoundException;
         $this->title = $s_ret;
         $s_ret = $this->crop('@var author=\'@', '@\';@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new AuthorNotFoundException;
         $this->author = $s_ret;
         $s_ret = $this->crop('@<div id="defaulthtml4">@', '@</table>@', $content);
         if (false === $s_ret ||
             false === preg_match_all('@<td><div class="dccss"><a href="(\d+\.html)" alt=".*">(.*)</a></div></td>@U', $s_ret, $a_tmp)
         )
-            return $this;
+            throw new ChaptersListingNotFoundException;
         $this->chapters = array();
         for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
         {
             $this->chapters[$a_tmp[1][$ii]] = str_replace('-ranwens.com', '', $a_tmp[2][$ii]);
         }
+        if (empty($this->chapters))
+            throw new ChaptersListingNotFoundException;
         return $this;
     }
 }

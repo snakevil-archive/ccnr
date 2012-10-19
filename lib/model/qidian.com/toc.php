@@ -25,7 +25,6 @@
 
 namespace CCNR\Model\Qidian_com;
 
-use Exception;
 use CCNR\Model;
 
 class TOC extends Model\TOC
@@ -52,7 +51,7 @@ class TOC extends Model\TOC
         settype($content, 'string');
         $s_ret = $this->crop('@<meta id="meta_share" name="meta_share" content="@', '@" title="@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new NovelTitleNotFoundException;
         list($this->title, $this->author) = explode('-', $s_ret);
         $s_ret = $this->crop('@<div id="content">@', '@</ul></div></div>\s*</div>@', $content);
         $s_ex = '@<li style=\'width:\d+%;\'>' .
@@ -62,7 +61,7 @@ class TOC extends Model\TOC
         if (false === $s_ret ||
             false === preg_match_all($s_ex, $s_ret, $a_tmp)
         )
-            return $this;
+            throw new ChaptersListingNotFoundException;
         $this->chapters = array();
         for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
         {
@@ -71,6 +70,8 @@ class TOC extends Model\TOC
                 $a_tmp[1][$ii] = '#' . array_shift(explode('.', array_pop(explode(',', $a_tmp[1][$ii]))));
             $this->chapters[$a_tmp[1][$ii]] = $a_tmp[2][$ii];
         }
+        if (empty($this->chapters))
+            throw new ChaptersListingNotFoundException;
         return $this;
     }
 }

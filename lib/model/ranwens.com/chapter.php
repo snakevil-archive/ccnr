@@ -25,7 +25,6 @@
 
 namespace CCNR\Model\Ranwens_com;
 
-use Exception;
 use CCNR\Model;
 
 class Chapter extends CCNR\Model\Chapter
@@ -53,37 +52,33 @@ class Chapter extends CCNR\Model\Chapter
         $content = iconv('gbk', 'utf-8//ignore', $content);
         $s_ret = $this->crop('@var articlename=\'@', '@\';@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new NovelTitleNotFoundException;
         $this->novelTitle = $s_ret;
         $s_ret = $this->crop('@var chaptername=\'@', '@\';@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new ChapterTitleNotFoundException;
         $this->title = $s_ret;
-        $s_ret = $this->crop('@var author=\'@', '@\';@', $content);
-        if (false === $s_ret)
-            return $this;
-        $this->author = $s_ret;
         $this->tocLink = 'index.html';
         $s_ret = $this->crop('@var preview_page = "@', '@";@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new PrevLinkNotFoundException;
         $this->prevLink = $s_ret;
         if ('index.html' == $this->prevLink)
             $this->prevLink = '';
         $s_ret = $this->crop('@var next_page = "@', '@";@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new NextLinkNotFoundException;
         $this->nextLink = $s_ret;
         if ('index.html' == $this->nextLink)
             $this->nextLink = '';
         $s_ret = $this->crop('@<DIV id=content name="content">\s*<script src=\'@', '@\'</script>@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new ParagraphsNotFoundException;
         $content = $this->read($s_ret);
         $content = iconv('gbk', 'utf-8//ignore', $content);
         $s_ret = $this->crop('@document\.writeln\("(&nbsp;)*@', '@("\)|<br /><br />(&nbsp;)*</div>)@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new ParagraphsNotFoundException;
         $this->paragraphs = array();
         $a_tmp = preg_split('@(<br />)+(&nbsp;)*@', $s_ret);
         for ($ii = 0, $jj = count($a_tmp); $ii < $jj; $ii++)
@@ -92,8 +87,10 @@ class Chapter extends CCNR\Model\Chapter
             if (strlen($a_tmp[$ii]))
                 $this->paragraphs[] = $a_tmp[$ii];
         }
-        if (0 === strpos($this->paragraphs[0], '收藏【燃文小说网】'))
+        if (!empty($this->paragraphs) && 0 === strpos($this->paragraphs[0], '收藏【燃文小说网】'))
             array_shift($this->paragraphs);
+        if (empty($this->paragraphs))
+            throw new ParagraphsNotFoundException;
         return $this;
     }
 }

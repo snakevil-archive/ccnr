@@ -1,6 +1,6 @@
 <?php
 /**
- * Initializes the RUNTIME ENVIRONMENT.
+ * Exposed on failed to analyse the novel title.
  *
  * This file is part of NOVEL.READER.
  *
@@ -23,20 +23,18 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-spl_autoload_register(function($class)
-    {
-        settype($class, 'string');
-        $s_class = strtolower($class);
-        if ('ccnr\\' != substr($s_class, 0, 5))
-            return;
-        $a_nodes = explode('\\', substr($s_class, 5));
-        $s_fpath = array_pop($a_nodes);
-        if ('exception' == substr($s_fpath, -9) && 9 != strlen($s_fpath))
-            $s_fpath = 'e.' . substr($s_fpath, 0, -9);
-        array_push($a_nodes, $s_fpath);
-        $s_fpath = __DIR__ . '/../lib/' . str_replace('_', '.', implode('/', $a_nodes)) . '.php';
-        if (is_file($s_fpath) && is_readable($s_fpath))
-            require_once $s_fpath;
-    });
+namespace CCNR\Model;
+
+use CCNR\Exception;
+
+class NovelTitleNotFoundException extends Exception
+{
+    /**
+     * Defines the message template.
+     *
+     * @var string
+     */
+    const MESSAGE = 'Novel title cannot be found.';
+}
 
 # vim:se ft=php ff=unix fenc=utf-8 tw=120:

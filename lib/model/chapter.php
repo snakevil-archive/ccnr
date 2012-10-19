@@ -25,8 +25,6 @@
 
 namespace CCNR\Model;
 
-use Exception;
-
 abstract class Chapter extends Page
 {
     /**

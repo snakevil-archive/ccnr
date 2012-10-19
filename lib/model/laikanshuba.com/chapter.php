@@ -25,7 +25,6 @@
 
 namespace CCNR\Model\Laikanshuba_com;
 
-use Exception;
 use CCNR\Model;
 
 class Chapter extends Model\Chapter
@@ -54,27 +53,27 @@ class Chapter extends Model\Chapter
         $this->tocLink = 'index.html';
         $s_ret = $this->crop('@var preview_page = "@', '@";@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new PrevLinkNotFoundException;
         $this->prevLink = $s_ret;
         if ('index.html' == $this->prevLink)
             $this->prevLink = '';
         $s_ret = $this->crop('@var next_page = "@', '@";@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new NextLinkNotFoundException;
         $this->nextLink = $s_ret;
         if ('index.html' == $this->nextLink)
             $this->nextLink = '';
         $s_ret = $this->crop('@-&gt;<a href="index.html">@', '@目录</a>@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new NovelTitleNotFoundException;
         $this->novelTitle = $s_ret;
         $s_ret = $this->crop('@<div id="title">@', '@</div>@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new ChapterTitleNotFoundException;
         $this->title = $s_ret;
         $s_ret = $this->crop('@<div id="content">(&nbsp;)*@', '@<center>@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new ParagraphsNotFoundException;
         $this->paragraphs = array();
         if (!strpos($s_ret, '<img src="'))
         {
@@ -91,6 +90,8 @@ class Chapter extends Model\Chapter
             for ($ii = 0, $jj = count($a_tmp[0]); $ii < $jj; $ii++)
                 $this->paragraphs[] = '![IMAGE](' . $a_tmp[1][$ii] . ')';
         }
+        if (empty($this->paragraphs))
+            throw new ParagraphsNotFoundException;
         return $this;
     }
 }

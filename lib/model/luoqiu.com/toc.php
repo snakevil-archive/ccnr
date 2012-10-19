@@ -25,7 +25,6 @@
 
 namespace CCNR\Model\Luoqiu_com;
 
-use Exception;
 use CCNR\Model;
 
 class TOC extends Model\TOC
@@ -53,22 +52,24 @@ class TOC extends Model\TOC
         $content = iconv('gbk', 'utf-8//ignore', $content);
         $s_ret = $this->crop('@<h1>@', '@最新章节</h1>@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new NovelTitleNotFoundException;
         $this->title = $s_ret;
         $s_ret = $this->crop('@<span class="author">作者：@', '@</span>@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new AuthorNotFoundException;
         $this->author = $s_ret;
         $s_ret = $this->crop('@<div class="booklist clearfix">@', '@</div><!--booklist-->@', $content);
         if (false === $s_ret ||
             false === preg_match_all('@<span><a href="(\d+\.html)">(.*)</a></span>@U', $s_ret, $a_tmp)
         )
-            return $this;
+            throw new ChaptersListingNotFoundException;
         $this->chapters = array();
         for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
         {
             $this->chapters[$a_tmp[1][$ii]] = $a_tmp[2][$ii];
         }
+        if (empty($this->chapters))
+            throw new ChaptersListingNotFoundException;
         return $this;
     }
 }

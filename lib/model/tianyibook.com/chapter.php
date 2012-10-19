@@ -25,7 +25,6 @@
 
 namespace CCNR\Model\Tianyibook_com;
 
-use Exception;
 use CCNR\Model;
 
 class Chapter extends Model\Chapter
@@ -53,14 +52,14 @@ class Chapter extends Model\Chapter
         $content = iconv('gbk', 'utf-8//ignore', $content);
         $s_ret = $this->crop('@<title>@', '@</title>@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new NovelTitleNotFoundException;
         $a_tmp = explode(' ', substr($s_ret, 0, -15));
         $this->novelTitle = array_shift($a_tmp);
         array_shift($a_tmp);
         $this->title = implode(' ', $a_tmp);
         $s_ret = $this->crop('@<div id="content">(&nbsp;)*@', '@(&nbsp;)*</div>\s*<div id="footlink">@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new ParagraphsNotFoundException;
         $this->paragraphs = array();
         if (!strpos($s_ret, '<img src="'))
         {
@@ -77,16 +76,18 @@ class Chapter extends Model\Chapter
             for ($ii = 0, $jj = count($a_tmp[0]); $ii < $jj; $ii++)
                 $this->paragraphs[] = '![IMAGE](' . $a_tmp[1][$ii] . ')';
         }
+        if (empty($this->paragraphs))
+            throw new ParagraphsNotFoundException;
         $this->tocLink = './';
         $s_ret = $this->crop('@\(快捷键：←\)<a href="@', '@">上一页</a>@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new PrevLinkNotFoundException;
         $this->prevLink = $s_ret;
         if ('index.html' == $this->prevLink)
             $this->prevLink = '';
         $s_ret = $this->crop('@">返回列表</a>\(快捷键：Enter\)(&nbsp;\s*)*<a href="@', '@">下一页</a>@', $content);
         if (false === $s_ret)
-            return $this;
+            throw new NextLinkNotFoundException;
         $this->nextLink = $s_ret;
         if ('index.html' == $this->nextLink)
             $this->nextLink = '';

@@ -25,8 +25,6 @@
 
 namespace CCNR\Model;
 
-use Exception;
-
 abstract class Page
 {
     /**
@@ -68,7 +66,7 @@ abstract class Page
     {
         settype($url, 'string');
         if (!static::validate($url))
-            throw new Exception('Dismatched URL.');
+            throw new DismatchedPageException;
         $this->url = $url;
         $this->parse($this->read($url));
     }
@@ -140,7 +138,7 @@ abstract class Page
         $r_page = curl_init($url);
         $b_ret = is_resource($r_page);
         if (!$b_ret)
-            throw new Exception('Failed to initialize HTTP reader.');
+            throw new RemoteHttpReaderException(array('reason' => 'Initialization failed.'));
         curl_setopt_array($r_page, array(CURLOPT_FILETIME => true,
                 CURLOPT_FORBID_REUSE => true,
                 CURLOPT_RETURNTRANSFER => true,
@@ -150,7 +148,7 @@ abstract class Page
             ));
         $s_page = curl_exec($r_page);
         if (false === $s_page)
-            throw new Exception('HTTP Reader: ' . ucfirst(curl_error($r_page)) . '.');
+            throw new RemoteHttpReaderException(array('reason' => ucfirst(curl_error($r_page)) . '.'));
         $this->modifiedTime = curl_getinfo($r_page, CURLINFO_FILETIME);
         curl_close($r_page);
         return $s_page;
