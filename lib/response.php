@@ -23,7 +23,9 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-class NrResponse
+namespace CCNR;
+
+class Response
 {
     const STATUS_100 = '100 Continue';
 
@@ -115,7 +117,7 @@ class NrResponse
     /**
      * Stores the only instance.
      *
-     * @var NrResponse
+     * @var Response
      */
     protected static $instance;
 
@@ -164,7 +166,7 @@ class NrResponse
     /**
      * Retrieves the only instance.
      *
-     * @return NrResponse
+     * @return Response
      */
     public static function singleton()
     {
@@ -177,7 +179,7 @@ class NrResponse
      * Writes content blob into the output buffer.
      *
      * @param  string
-     * @return NrResponse
+     * @return Response
      */
     public function write($blob)
     {

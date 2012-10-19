@@ -27,9 +27,9 @@ spl_autoload_register(function($class)
     {
         settype($class, 'string');
         $s_class = strtolower($class);
-        if ('nr' != substr($s_class, 0, 2))
+        if ('ccnr\\' != substr($s_class, 0, 5))
             return;
-        $s_fpath = __DIR__ . '/../lib/' . str_replace(array('\\', '_'), array('/', '.'), substr($s_class, 2)) . '.php';
+        $s_fpath = __DIR__ . '/../lib/' . str_replace(array('\\', '_'), array('/', '.'), substr($s_class, 5)) . '.php';
         if (is_file($s_fpath) && is_readable($s_fpath))
             require_once $s_fpath;
     });

@@ -23,12 +23,11 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-namespace NrView;
+namespace CCNR\View;
 
-use Exception;
-use NrView;
+use CCNR\View;
 
-class Assistant extends NrView
+class Assistant extends View
 {
     /**
      * Stores the tip message to be shown.
@@ -40,7 +39,7 @@ class Assistant extends NrView
     /**
      * CONSTRUCT FUNCTION
      *
-     * OVERRIDEN FROM {@link NrView::__construct()}.
+     * OVERRIDEN FROM {@link View::__construct()}.
      *
      * @param string $uri
      * @param string $tip OPTIONAL.
@@ -55,7 +54,7 @@ class Assistant extends NrView
     /**
      * Implements magic method.
      *
-     * IMPLEMENTED FROM {@link NrView::__toString()}.
+     * IMPLEMENTED FROM {@link View::__toString()}.
      *
      * @return string
      */

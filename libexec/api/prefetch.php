@@ -25,24 +25,24 @@
 
 require_once __DIR__ . '/../../include/init.php';
 
-$o_resp = NrResponse::singleton();
+$o_resp = CCNR\Response::singleton();
 
 if (!isset($_GET['s']) || !is_string($_GET['s']) || !strlen($_GET['s']))
-    $o_resp->halt(400, new NrView\API('', 400));
+    $o_resp->halt(400, new CCNR\View\API('', 400));
 
 try
 {
-    $o_chapter = NrModel\Analyzer::parse($_GET['s']);
+    $o_chapter = CCNR\Model\Analyzer::parse($_GET['s']);
 
-    if ($o_chapter instanceof NrModel\TOC)
-        $o_resp->halt(400, new NrView\API($_GET['s'], 400));
-    $o_data = new NrView\API\Chapter($_GET['s'], $o_chapter);
+    if ($o_chapter instanceof CCNR\Model\TOC)
+        $o_resp->halt(400, new CCNR\View\API($_GET['s'], 400));
+    $o_data = new CCNR\View\API\Chapter($_GET['s'], $o_chapter);
 }
 catch (Exception $ex)
 {
-    $o_resp->halt(504, new NrView\API($_GET['s'], 504));
+    $o_resp->halt(504, new CCNR\View\API($_GET['s'], 504));
 }
 
-$o_resp->write(new NrView\API($_GET['s'], 200, $o_data))->close();
+$o_resp->write(new CCNR\View\API($_GET['s'], 200, $o_data))->close();
 
 # vim:se ft=php ff=unix fenc=utf-8 tw=120:

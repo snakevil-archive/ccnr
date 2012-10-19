@@ -23,12 +23,11 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-namespace NrView;
+namespace CCNR\View;
 
-use Exception;
-use NrView;
+use CCNR\View;
 
-abstract class Data extends NrView
+abstract class Data extends View
 {
     /**
      * Stores the meta-data.
@@ -40,7 +39,7 @@ abstract class Data extends NrView
     /**
      * CONSTRUCT FUNCTION
      *
-     * OVERRIDEN FROM {@link NrView::__construct()}.
+     * OVERRIDEN FROM {@link View::__construct()}.
      *
      * @param string $uri
      * @param mixed  $meta
@@ -63,7 +62,7 @@ abstract class Data extends NrView
     /**
      * Implements magic method.
      *
-     * IMPLEMENTED FROM {@link NrView::__toString()}.
+     * IMPLEMENTED FROM {@link View::__toString()}.
      *
      * THIS METHOD CANNOT BE OVERRIDEN.
      *

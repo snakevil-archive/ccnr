@@ -23,7 +23,7 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-namespace NrModel;
+namespace CCNR\Model;
 
 use Exception;
 

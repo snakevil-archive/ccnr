@@ -23,22 +23,21 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-namespace NrView;
+namespace CCNR\View;
 
-use Exception;
-use NrModel;
+use CCNR\Model;
 
 class TOC extends Page
 {
     /**
      * CONSTRUCT FUNCTION
      *
-     * OVERRIDEN FROM {@link NrView::__construct()}.
+     * OVERRIDEN FROM {@link CCNR\View::__construct()}.
      *
      * @param string      $uri
-     * @param NrModel\TOC $toc
+     * @param Model\TOC $toc
      */
-    public function __construct($uri, NrModel\TOC $toc)
+    public function __construct($uri, Model\TOC $toc)
     {
         parent::__construct($uri, $toc);
     }
@@ -46,7 +45,7 @@ class TOC extends Page
     /**
      * Implements magic method.
      *
-     * IMPLEMENTED FROM {@link NrView::__toString()}.
+     * IMPLEMENTED FROM {@link CCNR\View::__toString()}.
      *
      * @return string
      */

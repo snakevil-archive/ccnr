@@ -23,17 +23,17 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-namespace NrModel\Yzuu_com;
+namespace CCNR\Model\Yzuu_com;
 
 use Exception;
-use NrModel;
+use CCNR\Model;
 
-class Chapter extends NrModel\Chapter
+class Chapter extends Model\Chapter
 {
     /**
      * Defines the matched URL pattern.
      *
-     * INHERITED from {@link NrModel\Page::PATTERN}.
+     * INHERITED from {@link Model\Page::PATTERN}.
      *
      * @var string
      */
@@ -42,7 +42,7 @@ class Chapter extends NrModel\Chapter
     /**
      * Parses retrieved content into meta-data.
      *
-     * OVERRIDEN FROM {@link NrModel\Page::parse()}.
+     * OVERRIDEN FROM {@link Model\Page::parse()}.
      *
      * @param  string  $content
      * @return Chapter

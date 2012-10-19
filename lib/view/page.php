@@ -23,30 +23,29 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-namespace NrView;
+namespace CCNR\View;
 
-use Exception;
-use NrModel;
-use NrView;
+use CCNR\Model;
+use CCNR\View;
 
-abstract class Page extends NrView
+abstract class Page extends View
 {
     /**
      * Stores the novel page model instance.
      *
-     * @var NrModel\Page
+     * @var Model\Page
      */
     protected $page;
 
     /**
      * CONSTRUCT FUNCTION
      *
-     * OVERRIDEN FROM {@link NrView::__construct()}.
+     * OVERRIDEN FROM {@link View::__construct()}.
      *
      * @param string       $uri
-     * @param NrModel\Page $page
+     * @param Model\Page $page
      */
-    public function __construct($uri, NrModel\Page $page)
+    public function __construct($uri, Model\Page $page)
     {
         parent::__construct($uri);
         $this->page = $page;

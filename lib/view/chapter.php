@@ -23,22 +23,21 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-namespace NrView;
+namespace CCNR\View;
 
-use Exception;
-use NrModel;
+use CCNR\Model;
 
 class Chapter extends Page
 {
     /**
      * CONSTRUCT FUNCTION
      *
-     * OVERRIDEN FROM {@link NrView::__construct()}.
+     * OVERRIDEN FROM {@link CCNR\View::__construct()}.
      *
-     * @param string      $uri
-     * @param NrModel\Chapter $chapter
+     * @param string        $uri
+     * @param Model\Chapter $chapter
      */
-    public function __construct($uri, NrModel\Chapter $chapter)
+    public function __construct($uri, Model\Chapter $chapter)
     {
         parent::__construct($uri, $chapter);
     }
@@ -46,7 +45,7 @@ class Chapter extends Page
     /**
      * Implements magic method.
      *
-     * IMPLEMENTED FROM {@link NrView::__toString()}.
+     * IMPLEMENTED FROM {@link CCNR\View::__toString()}.
      *
      * @return string
      */

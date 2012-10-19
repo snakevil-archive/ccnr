@@ -24,7 +24,7 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-namespace NrModel;
+namespace CCNR\Model;
 
 use Exception;
 
@@ -56,8 +56,8 @@ abstract class Analyzer
         if (!$s_host)
             throw new Exception('Illegal URL without an host.');
         $s_host = implode('_', array_slice(explode('.', $s_host), -2));
-        $s_ctoc = 'NrModel\\' . $s_host . '\\TOC';
-        $s_cchp = 'NrModel\\' . $s_host . '\\Chapter';
+        $s_ctoc = 'CCNR\\Model\\' . $s_host . '\\TOC';
+        $s_cchp = 'CCNR\\Model\\' . $s_host . '\\Chapter';
         if (!class_exists($s_ctoc))
             throw new Exception('Unsupported source.');
         if (call_user_func(array($s_ctoc, 'validate'), $url))

@@ -23,7 +23,9 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-abstract class NrView
+namespace CCNR;
+
+abstract class View
 {
     /**
      * Stores the request URI.

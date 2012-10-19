@@ -23,30 +23,30 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-namespace NrView\API;
+namespace CCNR\View\API;
 
 use Exception;
-use NrModel;
-use NrView;
+use CCNR\Model;
+use CCNR\View;
 
-class Chapter extends NrView\Data
+class Chapter extends View\Data
 {
     /**
      * Stores the chapter model.
      *
-     * @var NrModel\Chapter
+     * @var Model\Chapter
      */
     protected $meta;
 
     /**
      * CONSTRUCT FUNCTION
      *
-     * OVERRIDEN FROM {@link NrView\Data::__construct()}.
+     * OVERRIDEN FROM {@link View\Data::__construct()}.
      *
      * @param string          $uri
-     * @param NrModel\Chapter $chapter
+     * @param Model\Chapter $chapter
      */
-    public function __construct($uri, NrModel\Chapter $chapter)
+    public function __construct($uri, Model\Chapter $chapter)
     {
         parent::__construct($uri, $chapter);
     }
@@ -54,7 +54,7 @@ class Chapter extends NrView\Data
     /**
      * Serializes for JSON coding.
      *
-     * IMPLEMENTED FROM {@link NrView\Data::jsonSerialize()}.
+     * IMPLEMENTED FROM {@link View\Data::jsonSerialize()}.
      *
      * @return array
      */

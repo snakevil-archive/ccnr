@@ -25,10 +25,10 @@
 
 require_once __DIR__ . '/../include/init.php';
 
-$o_resp = NrResponse::singleton();
+$o_resp = CCNR\Response::singleton();
 
 if (!isset($_SERVER['QUERY_STRING']) || !strlen($_SERVER['QUERY_STRING']))
-    $o_resp->halt(200, new NrView\Assistant($_SERVER['REQUEST_URI']));
+    $o_resp->halt(200, new CCNR\View\Assistant($_SERVER['REQUEST_URI']));
 
 if (strpos($_SERVER['QUERY_STRING'], ':/'))
 {
@@ -43,15 +43,15 @@ else
 
 try
 {
-    $o_chapter = NrModel\Analyzer::parse($_SERVER['QUERY_STRING']);
+    $o_chapter = CCNR\Model\Analyzer::parse($_SERVER['QUERY_STRING']);
 
-    $o_page = $o_chapter instanceof NrModel\TOC ?
-        new NrView\TOC($_SERVER['REQUEST_URI'], $o_chapter) :
-        new NrView\Chapter($_SERVER['REQUEST_URI'], $o_chapter);
+    $o_page = $o_chapter instanceof CCNR\Model\TOC ?
+        new CCNR\View\TOC($_SERVER['REQUEST_URI'], $o_chapter) :
+        new CCNR\View\Chapter($_SERVER['REQUEST_URI'], $o_chapter);
 }
 catch (Exception $ex)
 {
-    $o_resp->halt(504, new NrView\Assistant($_SERVER['REQUEST_URI'], $ex->getMessage()));
+    $o_resp->halt(504, new CCNR\View\Assistant($_SERVER['REQUEST_URI'], $ex->getMessage()));
 }
 
 $o_resp->write($o_page)->close();

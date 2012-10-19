@@ -23,17 +23,17 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-namespace NrModel\Yzuu_com;
+namespace CCNR\Model\Yzuu_com;
 
 use Exception;
-use NrModel;
+use CCNR\Model;
 
-class TOC extends NrModel\TOC
+class TOC extends Model\TOC
 {
     /**
      * Defines the matched URL pattern.
      *
-     * INHERITED from {@link NrModel\Page::PATTERN}.
+     * INHERITED from {@link Model\Page::PATTERN}.
      *
      * @var string
      */
@@ -42,7 +42,7 @@ class TOC extends NrModel\TOC
     /**
      * Parses retrieved content into meta-data.
      *
-     * OVERRIDEN FROM {@link NrModel\Page::parse()}.
+     * OVERRIDEN FROM {@link Model\Page::parse()}.
      *
      * @param  string  $content
      * @return TOC
