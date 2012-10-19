@@ -112,10 +112,11 @@ if (_ && _.$ && _.n && _.n.length && "#" != _.n[0]) {
 			_.$("nextLink").onclick = function (ev) {
 				var x = this.href;
 				if (!_.h.has(x)) return;
-				var y = _.h.get(x);
 				ev.preventDefault();
+				if (location.href == x) return;
 				if (this.onclick.locked) return;
 				this.onclick.locked = true;
+				var y = _.h.get(x);
 				history.pushState(y, y.t[0], x);
 				_.d(y);
 				window.scrollTo(0, 0);
