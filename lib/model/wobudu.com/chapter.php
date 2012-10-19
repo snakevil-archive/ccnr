@@ -52,11 +52,11 @@ class Chapter extends Model\Chapter
         $content = iconv('gbk', 'utf-8//ignore', $content);
         $s_ret = $this->crop('@<title>@', '@</title>@', $content);
         if (false === $s_ret)
-            throw new NovelTitleNotFoundException;
+            throw new Model\NovelTitleNotFoundException;
         list($this->novelTitle, $this->title) = explode('： ', substr($s_ret, 10, -25));
         $s_ret = $this->crop('@<div id="wcr">.*<p>@sU', '@</p>\s*</div>\s*<div id="wc2">@', $content);
         if (false === $s_ret)
-            throw new ParagraphsNotFoundException;
+            throw new Model\ParagraphsNotFoundException;
         $a_tmp = preg_split('@\s*</p>\s*<p>\s*@', $s_ret);
         $this->paragraphs = array();
         for ($ii = 0, $jj = count($a_tmp); $ii < $jj; $ii++)
@@ -66,17 +66,17 @@ class Chapter extends Model\Chapter
                 $this->paragraphs[] = $a_tmp[$ii];
         }
         if (empty($this->paragraphs))
-            throw new ParagraphsNotFoundException;
+            throw new Model\ParagraphsNotFoundException;
         $this->tocLink = './';
         $s_ret = $this->crop('@<div class="page">\s*<a href="@', '@">上一章</a>@', $content);
         if (false === $s_ret)
-            throw new PrevLinkNotFoundException;
+            throw new Model\PrevLinkNotFoundException;
         $this->prevLink = $s_ret;
         if ('./' == $this->prevLink)
             $this->prevLink = '';
         $s_ret = $this->crop('@>返回目录</a>\s*<a href="@', '@">下一章</a>@', $content);
         if (false === $s_ret)
-            throw new NextLinkNotFoundException;
+            throw new Model\NextLinkNotFoundException;
         $this->nextLink = $s_ret;
         if ('./' == $this->nextLink)
             $this->nextLink = '';

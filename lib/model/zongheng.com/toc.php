@@ -51,20 +51,20 @@ class TOC extends Model\TOC
         settype($content, 'string');
         $s_ret = $this->crop('@<meta name="keywords" content="@', '@,最新章节,最新TXT下载,全文阅读@', $content);
         if (false === $s_ret)
-            throw new NovelTitleNotFoundException;
+            throw new Model\NovelTitleNotFoundException;
         list($this->title, $this->author) = explode(',', $s_ret);
         $s_ret = $this->crop('@<div class="chapter">@', '@<!-- 章节列表 结束 -->@', $content);
         if (false === $s_ret ||
             false === preg_match_all('@(<td>|</em>\s*)<a href="http://book.zongheng.com(.*)" title="最后更新时间:.*">(.*)</a>@U', $s_ret, $a_tmp)
         )
-            throw new ChaptersListingNotFoundException;
+            throw new Model\ChaptersListingNotFoundException;
         $this->chapters = array();
         for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
         {
             $this->chapters[('/' == $a_tmp[1][$ii][1] ? '#' : '..') . $a_tmp[2][$ii]] = $a_tmp[3][$ii];
         }
         if (empty($this->chapters))
-            throw new ChaptersListingNotFoundException;
+            throw new Model\ChaptersListingNotFoundException;
         return $this;
     }
 }

@@ -52,11 +52,11 @@ class Chapter extends Model\Chapter
         $content = iconv('gbk', 'utf-8//ignore', $content);
         $s_ret = $this->crop('@<meta name="description" content="@', '@">@', $content);
         if (false === $s_ret)
-            throw new NovelTitleNotFoundException;
+            throw new Model\NovelTitleNotFoundException;
         list($this->novelTitle, $this->title) = explode(' - ', $s_ret);
         $s_ret = $this->crop('@<div id="readtext"><p>(&nbsp;)*@', '@</p></div>@', $content);
         if (false === $s_ret)
-            throw new ParagraphsNotFoundException;
+            throw new Model\ParagraphsNotFoundException;
         $this->paragraphs = array();
         if (!strpos($s_ret, '<img src="'))
         {
@@ -80,16 +80,16 @@ class Chapter extends Model\Chapter
                 $this->paragraphs[] = '![IMAGE](' . $a_tmp[1][$ii] . ')';
         }
         if (empty($this->paragraphs))
-            throw new ParagraphsNotFoundException;
+            throw new Model\ParagraphsNotFoundException;
         $s_prefix = '/' == substr($this->url, -1) ? '../' : '';
         $this->tocLink = strlen($s_prefix) ? $s_prefix : './';
         $s_ret = $this->crop('@\(快捷键：←\)\s*<a href="/look/\d+/@', '@">上一页</a>@', $content);
         if (false === $s_ret)
-            throw new PrevLinkNotFoundException;
+            throw new Model\PrevLinkNotFoundException;
         $this->prevLink = 'Index.shtml' == $s_ret ? '' : $s_prefix . $s_ret . '/';
         $s_ret = $this->crop('@">返回目录</a>\s*<a href="/look/\d+/@', '@">下一页</a>@', $content);
         if (false === $s_ret)
-            throw new NextLinkNotFoundException;
+            throw new Model\NextLinkNotFoundException;
         $this->nextLink = 'Index.shtml' == $s_ret ? '' : $s_prefix . $s_ret . '/';
         return $this;
     }

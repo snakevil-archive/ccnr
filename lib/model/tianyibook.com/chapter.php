@@ -52,14 +52,14 @@ class Chapter extends Model\Chapter
         $content = iconv('gbk', 'utf-8//ignore', $content);
         $s_ret = $this->crop('@<title>@', '@</title>@', $content);
         if (false === $s_ret)
-            throw new NovelTitleNotFoundException;
+            throw new Model\NovelTitleNotFoundException;
         $a_tmp = explode(' ', substr($s_ret, 0, -15));
         $this->novelTitle = array_shift($a_tmp);
         array_shift($a_tmp);
         $this->title = implode(' ', $a_tmp);
         $s_ret = $this->crop('@<div id="content">(&nbsp;)*@', '@(&nbsp;)*</div>\s*<div id="footlink">@', $content);
         if (false === $s_ret)
-            throw new ParagraphsNotFoundException;
+            throw new Model\ParagraphsNotFoundException;
         $this->paragraphs = array();
         if (!strpos($s_ret, '<img src="'))
         {
@@ -77,17 +77,17 @@ class Chapter extends Model\Chapter
                 $this->paragraphs[] = '![IMAGE](' . $a_tmp[1][$ii] . ')';
         }
         if (empty($this->paragraphs))
-            throw new ParagraphsNotFoundException;
+            throw new Model\ParagraphsNotFoundException;
         $this->tocLink = './';
         $s_ret = $this->crop('@\(快捷键：←\)<a href="@', '@">上一页</a>@', $content);
         if (false === $s_ret)
-            throw new PrevLinkNotFoundException;
+            throw new Model\PrevLinkNotFoundException;
         $this->prevLink = $s_ret;
         if ('index.html' == $this->prevLink)
             $this->prevLink = '';
         $s_ret = $this->crop('@">返回列表</a>\(快捷键：Enter\)(&nbsp;\s*)*<a href="@', '@">下一页</a>@', $content);
         if (false === $s_ret)
-            throw new NextLinkNotFoundException;
+            throw new Model\NextLinkNotFoundException;
         $this->nextLink = $s_ret;
         if ('index.html' == $this->nextLink)
             $this->nextLink = '';

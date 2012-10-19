@@ -51,7 +51,7 @@ class TOC extends Model\TOC
         settype($content, 'string');
         $s_ret = $this->crop('@<meta id="meta_share" name="meta_share" content="@', '@" title="@', $content);
         if (false === $s_ret)
-            throw new NovelTitleNotFoundException;
+            throw new Model\NovelTitleNotFoundException;
         list($this->title, $this->author) = explode('-', $s_ret);
         $s_ret = $this->crop('@<div id="content">@', '@</ul></div></div>\s*</div>@', $content);
         $s_ex = '@<li style=\'width:\d+%;\'>' .
@@ -61,7 +61,7 @@ class TOC extends Model\TOC
         if (false === $s_ret ||
             false === preg_match_all($s_ex, $s_ret, $a_tmp)
         )
-            throw new ChaptersListingNotFoundException;
+            throw new Model\ChaptersListingNotFoundException;
         $this->chapters = array();
         for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
         {
@@ -71,7 +71,7 @@ class TOC extends Model\TOC
             $this->chapters[$a_tmp[1][$ii]] = $a_tmp[2][$ii];
         }
         if (empty($this->chapters))
-            throw new ChaptersListingNotFoundException;
+            throw new Model\ChaptersListingNotFoundException;
         return $this;
     }
 }

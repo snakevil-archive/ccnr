@@ -53,23 +53,23 @@ class Chapter extends Model\Chapter
         $this->tocLink = 'index.html';
         $s_ret = $this->crop('@var preview_page = "@', '@";@', $content);
         if (false === $s_ret)
-            throw new PrevLinkNotFoundException;
+            throw new Model\PrevLinkNotFoundException;
         $this->prevLink = $s_ret;
         if ('index.html' == $this->prevLink)
             $this->prevLink = '';
         $s_ret = $this->crop('@var next_page = "@', '@";@', $content);
         if (false === $s_ret)
-            throw new NextLinkNotFoundException;
+            throw new Model\NextLinkNotFoundException;
         $this->nextLink = $s_ret;
         if ('index.html' == $this->nextLink)
             $this->nextLink = '';
         $s_ret = $this->crop('@<div id="title">@', '@</div>@', $content);
         if (false === $s_ret)
-            throw new NovelTitleNotFoundException;
+            throw new Model\NovelTitleNotFoundException;
         list($this->novelTitle, $this->title) = explode('· ', $s_ret);
         $s_ret = $this->crop('@<div id="content">(&nbsp;)*@', '@<br /><br />(&nbsp;)*<div&nbsp;id=@', $content);
         if (false === $s_ret)
-            throw new ParagraphsNotFoundException;
+            throw new Model\ParagraphsNotFoundException;
         $this->paragraphs = array();
         $a_tmp = preg_split('@(<br />\s*)+(&nbsp;)*@', $s_ret);
         for ($ii = 0, $jj = count($a_tmp); $ii < $jj; $ii++)
@@ -79,7 +79,7 @@ class Chapter extends Model\Chapter
                 $this->paragraphs[] = $a_tmp[$ii];
         }
         if (empty($this->paragraphs))
-            throw new ParagraphsNotFoundException;
+            throw new Model\ParagraphsNotFoundException;
         return $this;
     }
 }

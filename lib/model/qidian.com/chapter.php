@@ -51,21 +51,21 @@ class Chapter extends Model\Chapter
         settype($content, 'string');
         $s_ret = $this->crop('@<title>\s*小说:@', '@</title>@', $content);
         if (false === $s_ret)
-            throw new NovelTitleNotFoundException;
+            throw new Model\NovelTitleNotFoundException;
         list($this->novelTitle, $this->title) = explode('/', $s_ret);
         $s_ret = $this->crop('@<a id="HeadPrevLink" href="@', '@">上一章</a>@', $content);
         if (false === $s_ret)
-            throw new PrevLinkNotFoundException;
+            throw new Model\PrevLinkNotFoundException;
         $this->prevLink = array_pop(explode('/BookReader/', $s_ret));
         if (0 === strpos($this->prevLink, 'v'))
             $this->prevLink = '#' . array_shift(explode('.', array_pop(explode(',', $this->prevLink))));
         $s_ret = $this->crop('@<a href="@', '@">回书目</a>@', $content);
         if (false === $s_ret)
-            throw new TocLinkNotFoundException;
+            throw new Model\TocLinkNotFoundException;
         $this->tocLink = array_pop(explode('/BookReader/', $s_ret));
         $s_ret = $this->crop('@<a id="HeadNextLink" href="@', '@">下一章</a>@', $content);
         if (false === $s_ret)
-            throw new NextLinkNotFoundException;
+            throw new Model\NextLinkNotFoundException;
         $this->nextLink = array_pop(explode('/BookReader/', $s_ret));
         switch ($this->nextLink[0])
         {
@@ -78,12 +78,12 @@ class Chapter extends Model\Chapter
         }
         $s_ret = $this->crop('@<script src=\'@', '@\'  charset=\'GB2312\'></script>@', $content);
         if (false === $s_ret)
-            throw new ParagraphsNotFoundException;
+            throw new Model\ParagraphsNotFoundException;
         $content = $this->read($s_ret);
         $content = iconv('gbk', 'utf-8//ignore', $content);
         $s_ret = $this->crop('@document\.write\(\'@', '@<a href=@', $content);
         if (false === $s_ret)
-            throw new ParagraphsNotFoundException;
+            throw new Model\ParagraphsNotFoundException;
         $a_tmp = preg_split('@\s*<p>\s*@', $s_ret);
         $this->paragraphs = array();
         for ($ii = 0, $jj = count($a_tmp); $ii < $jj; $ii++)
@@ -93,7 +93,7 @@ class Chapter extends Model\Chapter
                 $this->paragraphs[] = $a_tmp[$ii];
         }
         if (empty($this->paragraphs))
-            throw new ParagraphsNotFoundException;
+            throw new Model\ParagraphsNotFoundException;
         return $this;
     }
 }

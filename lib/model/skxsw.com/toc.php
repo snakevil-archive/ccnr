@@ -52,24 +52,24 @@ class TOC extends Model\TOC
         $content = iconv('gbk', 'utf-8//ignore', $content);
         $s_ret = $this->crop('@<title>@', '@最新章节列表@', $content);
         if (false === $s_ret)
-            throw new NovelTitleNotFoundException;
+            throw new Model\NovelTitleNotFoundException;
         $this->title = $s_ret;
         $s_ret = $this->crop('@<meta name="keywords" content="@', '@最新创作小说:@', $content);
         if (false === $s_ret)
-            throw new AuthorNotFoundException;
+            throw new Model\AuthorNotFoundException;
         $this->author = $s_ret;
         $s_ret = $this->crop('@<div class="bookdetail">@', '@</table>@', $content);
         if (false === $s_ret ||
             false === preg_match_all('@<td class="p88" width="250">  <a style="" href="(\d+\.html)">(.*)</a>@U', $s_ret, $a_tmp)
         )
-            throw new ChaptersListingNotFoundException;
+            throw new Model\ChaptersListingNotFoundException;
         $this->chapters = array();
         for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
         {
             $this->chapters[$a_tmp[1][$ii]] = $a_tmp[2][$ii];
         }
         if (empty($this->chapters))
-            throw new ChaptersListingNotFoundException;
+            throw new Model\ChaptersListingNotFoundException;
         return $this;
     }
 }

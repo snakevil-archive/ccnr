@@ -52,24 +52,24 @@ class TOC extends Model\TOC
         $content = iconv('gbk', 'utf-8//ignore', $content);
         $s_ret = $this->crop('@var articlename=\'@', '@\';@', $content);
         if (false === $s_ret)
-            throw new NovelTitleNotFoundException;
+            throw new Model\NovelTitleNotFoundException;
         $this->title = $s_ret;
         $s_ret = $this->crop('@var author=\'@', '@\';@', $content);
         if (false === $s_ret)
-            throw new AuthorNotFoundException;
+            throw new Model\AuthorNotFoundException;
         $this->author = $s_ret;
         $s_ret = $this->crop('@<div id="defaulthtml4">@', '@</table>@', $content);
         if (false === $s_ret ||
             false === preg_match_all('@<td><div class="dccss"><a href="(\d+\.html)" alt=".*">(.*)</a></div></td>@U', $s_ret, $a_tmp)
         )
-            throw new ChaptersListingNotFoundException;
+            throw new Model\ChaptersListingNotFoundException;
         $this->chapters = array();
         for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
         {
             $this->chapters[$a_tmp[1][$ii]] = str_replace('-ranwens.com', '', $a_tmp[2][$ii]);
         }
         if (empty($this->chapters))
-            throw new ChaptersListingNotFoundException;
+            throw new Model\ChaptersListingNotFoundException;
         return $this;
     }
 }

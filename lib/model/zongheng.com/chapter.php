@@ -51,15 +51,15 @@ class Chapter extends Model\Chapter
         settype($content, 'string');
         $s_ret = $this->crop('@<body bookId="\d+" bookName="@', '@"@', $content);
         if (false === $s_ret)
-            throw new NovelTitleNotFoundException;
+            throw new Model\NovelTitleNotFoundException;
         $this->novelTitle = $s_ret;
         $s_ret = $this->crop('@<h2>.*<em>@', '@</em></h2>@', $content);
         if (false === $s_ret)
-            throw new ChapterTitleNotFoundException;
+            throw new Model\ChapterTitleNotFoundException;
         $this->title = $s_ret;
         $s_ret = $this->crop('@<div id="chapterContent" class="content"><p>@', '@</p></div>@', $content);
         if (false === $s_ret)
-            throw new ParagraphsNotFoundException;
+            throw new Model\ParagraphsNotFoundException;
         $this->paragraphs = array();
         $a_tmp = preg_split('@(<span class="watermark">.*</span>)?</p><p>@U', $s_ret);
         for ($ii = 0, $jj = count($a_tmp); $ii < $jj; $ii++)
@@ -70,12 +70,12 @@ class Chapter extends Model\Chapter
         }
         array_push($this->paragraphs, array_shift(explode('<span ', array_pop($this->paragraphs))));
         if (empty($this->paragraphs))
-            throw new ParagraphsNotFoundException;
+            throw new Model\ParagraphsNotFoundException;
         $s_ret = $this->crop('@\(快捷键：←\)<a href="http://book.zongheng.com/chapter/\d+/@', '@">上一章</a>@', $content);
         $this->prevLink = false === $s_ret ? '' : $s_ret;
         $s_ret = $this->crop('@\(快捷键：回车\)<a href="http://book.zongheng.com@', '@">回目录</a>@', $content);
         if (false === $s_ret)
-            throw new TocLinkNotFoundException;
+            throw new Model\TocLinkNotFoundException;
         $this->tocLink = '../..' . $s_ret;
         $s_ret = $this->crop('@\(快捷键：→\)<a href="http://book.zongheng.com/chapter/\d+/@', '@">下一章</a>@', $content);
         $this->nextLink = false === $s_ret ? '' : $s_ret;
