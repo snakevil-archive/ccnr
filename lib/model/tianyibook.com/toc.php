@@ -58,16 +58,48 @@ class TOC extends Model\TOC
         if (false === $s_ret)
             throw new Model\AuthorNotFoundException;
         $this->author = $s_ret;
-        $s_ret = $this->crop('@<table border="0" align="center" cellpadding="3" cellspacing="1" class="acss">@', '@<div id="box"><h2>Tags：<a href="@', $content);
-        if (false === $s_ret ||
-            false === preg_match_all('@<td class="ccss">\s*<a href="(\d+\.html)">(.*)</a>\s*</td>@U', $s_ret, $a_tmp)
-        )
+        $s_ret = $this->crop('@<table border="0" align="center" cellpadding="3" cellspacing="1" class="acss">@', '@<div id="box">@', $content);
+        if (false === $s_ret)
             throw new Model\ChaptersListingNotFoundException;
+        $content = 'class="vcss">正文</td></tr>' . $s_ret . '<td colspan="4"';
         $this->chapters = array();
-        for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
+        do
         {
-            $this->chapters[$a_tmp[1][$ii]] = $a_tmp[2][$ii];
+            $s_vol = $this->crop('@class="vcss">@', '@</td>@', $content);
+            if (false === $s_vol)
+                break;
+            $s_ret = $this->crop('@</tr>@', '@<td colspan="4"@', $content);
+            if (false === $s_ret ||
+                false === preg_match_all('@<a href="(\d+\.html)">(.*)</a>@U', $s_ret, $a_tmp)
+            )
+                throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
+            if (empty($a_tmp[0]))
+                continue;
+            $a_chps = array();
+            if (array_key_exists($s_vol, $this->chapters))
+            {
+                if (array_pop(array_keys($this->chapters)) == $s_vol)
+                    $a_chps = $this->chapters[$s_vol];
+                else
+                {
+                    while (array_key_exists($s_vol, $this->chapters))
+                    {
+                        list($s_vol, $ii) = explode('#', $s_vol);
+                        if (!$ii)
+                            $ii = 1;
+                        $s_vol .= '#' . (1 + $ii);
+                    }
+                }
+            }
+            for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
+            {
+                $a_chps[$s_prefix . $a_tmp[1][$ii] . '/'] = $a_tmp[2][$ii];
+            }
+            if (empty($a_chps))
+                throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
+            $this->chapters[$s_vol] = $a_chps;
         }
+        while (true);
         if (empty($this->chapters))
             throw new Model\ChaptersListingNotFoundException;
         return $this;
