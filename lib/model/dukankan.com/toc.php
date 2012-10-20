@@ -87,6 +87,7 @@ class TOC extends Model\TOC
                             $ii = 1;
                         $s_vol .= '#' . (1 + $ii);
                     }
+                }
             }
             for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
                 $a_chps[$a_tmp[1][$ii]] = $a_tmp[2][$ii];
