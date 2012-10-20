@@ -34,7 +34,7 @@ class ChaptersListingNotFoundException extends Exception
      *
      * @var string
      */
-    const MESSAGE = 'Chapters listing cannot be found.';
+    const MESSAGE = 'Chapters listing of Volume `%s\' cannot be found.';
 }
 
 # vim:se ft=php ff=unix fenc=utf-8 tw=120:

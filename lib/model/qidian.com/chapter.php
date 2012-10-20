@@ -53,35 +53,41 @@ class Chapter extends Model\Chapter
         if (false === $s_ret)
             throw new Model\NovelTitleNotFoundException;
         list($this->novelTitle, $this->title) = explode('/', $s_ret);
-        $s_ret = $this->crop('@<a id="HeadPrevLink" href="@', '@">上一章</a>@', $content);
+        $s_ret = $this->crop('@<a id="HeadPrevLink" href="@', '@">@', $content);
         if (false === $s_ret)
-            throw new Model\PrevLinkNotFoundException;
-        $this->prevLink = array_pop(explode('/BookReader/', $s_ret));
-        if (0 === strpos($this->prevLink, 'v'))
-            $this->prevLink = '#' . array_shift(explode('.', array_pop(explode(',', $this->prevLink))));
-        $s_ret = $this->crop('@<a href="@', '@">回书目</a>@', $content);
+            $this->prevLink = '';
+        else
+        {
+            $this->prevLink = array_pop(explode('/BookReader/', $s_ret));
+            if (0 === strpos($this->prevLink, 'v'))
+                $this->prevLink = '#' . array_shift(explode('.', array_pop(explode(',', $this->prevLink))));
+        }
+        $s_ret = $this->crop('@上一章</a>\s*<a href="@', '@">回书目</a>@', $content);
         if (false === $s_ret)
             throw new Model\TocLinkNotFoundException;
         $this->tocLink = array_pop(explode('/BookReader/', $s_ret));
         $s_ret = $this->crop('@<a id="HeadNextLink" href="@', '@">下一章</a>@', $content);
         if (false === $s_ret)
-            throw new Model\NextLinkNotFoundException;
-        $this->nextLink = array_pop(explode('/BookReader/', $s_ret));
-        switch ($this->nextLink[0])
+            $this->nextLink = '';
+        else
         {
-            case 'v':
-                $this->nextLink = '#' . array_shift(explode('.', array_pop(explode(',', $this->nextLink))));
-                break;
-            case 'B':
-                $this->nextLink = '#' . array_pop(explode('chapterId=', $this->nextLink));
-                break;
+            $this->nextLink = array_pop(explode('/BookReader/', $s_ret));
+            switch ($this->nextLink[0])
+            {
+                case 'v':
+                    $this->nextLink = '#' . array_shift(explode('.', array_pop(explode(',', $this->nextLink))));
+                    break;
+                case 'B':
+                    $this->nextLink = '#' . array_pop(explode('chapterId=', $this->nextLink));
+                    break;
+            }
         }
         $s_ret = $this->crop('@<script src=\'@', '@\'  charset=\'GB2312\'></script>@', $content);
         if (false === $s_ret)
             throw new Model\ParagraphsNotFoundException;
         $content = $this->read($s_ret);
         $content = iconv('gbk', 'utf-8//ignore', $content);
-        $s_ret = $this->crop('@document\.write\(\'@', '@<a href=@', $content);
+        $s_ret = $this->crop('@document\.write\(\'@', '@(\'\);|<a href=)@', $content);
         if (false === $s_ret)
             throw new Model\ParagraphsNotFoundException;
         $a_tmp = preg_split('@\s*<p>\s*@', $s_ret);

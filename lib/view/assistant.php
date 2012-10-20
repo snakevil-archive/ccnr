@@ -79,9 +79,9 @@ class Assistant extends View
 <link rel="shortcut icon" href="{$this->uri}share/ccnr.ico" type="image/x-icon" />
 </head>
 <body>
-<dl>
-<dd><span>Bookmarklet</span><a href="javascript:void((function(x,y){document.close();x.href.indexOf(y)&&x.assign(y+x.href.substr(7))})(location,'{$s_url}'))">READ!</a><span>&#x2934;</span></dd>
-</dl>
+<ol>
+<li><span>Bookmarklet</span><a href="javascript:void((function(x,y){document.close();x.href.indexOf(y)&&x.assign(y+x.href.substr(7))})(location,'{$s_url}'))">READ!</a><span>&#x2934;</span></li>
+</ol>
 <h3>Clean & Clear Novel Reader</h3>
 <form action="?">
 <input name="s" type="text" size="64" placeholder="Paste/Type URL here and Go to..." />

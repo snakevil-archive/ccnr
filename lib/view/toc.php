@@ -51,10 +51,13 @@ class TOC extends Page
      */
     public function __toString()
     {
-        $s_chapters = '<a href="' . implode("</a></li>\n<li><a href=\"", array_map(function($url, $title)
+        $s_chapters = implode("\n", array_map(function($volume, $chapters)
                 {
-                    return $url . '">' . $title;
-                }, array_keys($this->page->chapters), array_values($this->page->chapters))) . '</a>';
+                    return "<dt>{$volume}</dt>\n" . implode("\n", array_map(function($url, $title)
+                            {
+                                return '<dd><a href="' . $url . '">' . $title . '</a></dd>';
+                            }, array_keys($chapters), array_values($chapters)));
+                }, array_keys($this->page->chapters), array_values($this->page->chapters)));
         return <<<HTML
 <!DOCTYPE html>
 <html>
@@ -68,9 +71,9 @@ class TOC extends Page
 </head>
 <body>
 <h1><label author="{$this->page->author}">{$this->page->title}</label></h1>
-<ol>
-<li>{$s_chapters}</li>
-</ol>
+<dl>
+{$s_chapters}
+</dl>
 </body>
 </html>
 HTML;
