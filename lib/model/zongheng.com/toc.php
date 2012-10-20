@@ -69,6 +69,20 @@ class TOC extends Model\TOC
             )
                 throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
             $a_chps = array();
+            if (array_key_exists($s_vol, $this->chapters))
+            {
+                if (array_pop(array_keys($this->chapters)) == $s_vol)
+                    $a_chps = $this->chapters[$s_vol];
+                else
+                {
+                    while (array_key_exists($s_vol, $this->chapters))
+                    {
+                        list($s_vol, $ii) = explode('#', $s_vol);
+                        if (!$ii)
+                            $ii = 1;
+                        $s_vol .= '#' . (1 + $ii);
+                    }
+            }
             for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
             {
                 $a_chps[('/' == $a_tmp[1][$ii][1] ? '#' : '..') . $a_tmp[2][$ii]] = $a_tmp[3][$ii];

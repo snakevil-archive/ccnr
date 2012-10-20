@@ -73,7 +73,21 @@ class TOC extends Model\TOC
             if (false === $s_ret ||
                 false === preg_match_all($s_ex, $s_ret, $a_tmp))
                 throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
-            $a_chps = array_key_exists($s_vol, $this->chapters) ? $this->chapters[$s_vol] : array();
+            $a_chps = array();
+            if (array_key_exists($s_vol, $this->chapters))
+            {
+                if (array_pop(array_keys($this->chapters)) == $s_vol)
+                    $a_chps = $this->chapters[$s_vol];
+                else
+                {
+                    while (array_key_exists($s_vol, $this->chapters))
+                    {
+                        list($s_vol, $ii) = explode('#', $s_vol);
+                        if (!$ii)
+                            $ii = 1;
+                        $s_vol .= '#' . (1 + $ii);
+                    }
+            }
             for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
             {
                 $a_tmp[1][$ii] = array_pop(explode('/BookReader/', $a_tmp[1][$ii]));
