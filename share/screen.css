@@ -27,6 +27,8 @@ a { border: dashed Honeydew 0; border-bottom-width: 1px; color: RoyalBlue; line-
 a[href=""] { display: none }
 a:visited { color: DarkOrchid }
 a:hover { border-color: Black; color: Black !important }
+a[href^="#"] { color: DimGray !important; text-decoration: line-through }
+a[href^="#"]:hover { border-color: Honeydew }
 
 dl { border: solid Silver 2px; border-radius: 0 0 16px 16px; -moz-border-radius: 0 0 16px 16px; -webkit-border-radius: 0 0 16px 16px; border-top-width: 0; color: Silver; font-family: Arial, Helvetica, Tahoma, sans-serif; font-size: 12px; font-variant: small-caps; margin: 0; padding: 4px 0; position: absolute; right: 61%; top:0 }
 dd { margin: 0; padding: 0 8px }
