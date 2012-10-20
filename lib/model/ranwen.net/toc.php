@@ -61,18 +61,20 @@ class TOC extends Model\TOC
         $s_ret = $this->crop('@<div id="defaulthtml4">@', '@</table>@', $content);
         if (false === $s_ret)
             throw new Model\ChaptersListingNotFoundException;
-        $content = $s_ret . '</table>';
+        $content = '<b>正文</b></td></tr>' . $s_ret . '<td colspan=4';
         $this->chapters = array();
         do
         {
             $s_vol = $this->crop('@<b>@', '@</b>@', $content);
             if (false === $s_vol)
                 break;
-            $s_ret = $this->crop('@</td></tr>@', '@(</table>|<td colspan=4)@', $content);
+            $s_ret = $this->crop('@</td></tr>@', '@<td colspan=4@', $content);
             if (false === $s_ret ||
                 false === preg_match_all('@<a href="(\d+\.html)" alt=".*">(.*)</a>@U', $s_ret, $a_tmp)
             )
                 throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
+            if (empty($a_tmp[0]))
+                continue;
             $a_chps = array();
             if (array_key_exists($s_vol, $this->chapters))
             {

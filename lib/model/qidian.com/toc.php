@@ -73,6 +73,8 @@ class TOC extends Model\TOC
             if (false === $s_ret ||
                 false === preg_match_all($s_ex, $s_ret, $a_tmp))
                 throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
+            if (empty($a_tmp[0]))
+                continue;
             $a_chps = array();
             if (array_key_exists($s_vol, $this->chapters))
             {

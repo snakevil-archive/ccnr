@@ -61,18 +61,20 @@ class TOC extends Model\TOC
         $s_ret = $this->crop('@<table border="0" align="center" cellpadding="4" cellspacing="1" class="acss">@', '@</table>@', $content);
         if (false === $s_ret)
             throw new Model\ChaptersListingNotFoundException;
-        $content = $s_ret . '</table>';
+        $content = 'class="vcss">正文</td>' . $s_ret . '<td colspan="4"';
         $this->chapters = array();
         do
         {
-            $s_vol = $this->crop('@<td colspan="4" class="vcss">@', '@</td>@', $content);
+            $s_vol = $this->crop('@class="vcss">@', '@</td>@', $content);
             if (false === $s_vol)
                 break;
-            $s_ret = $this->crop('@<tr>@', '@(<td colspan="4" class="vcss">|</table>)@', $content);
+            $s_ret = $this->crop('@<tr>@', '@<td colspan="4"@', $content);
             if (false === $s_ret ||
                 false === preg_match_all('@<a href="(\d+\.html)">(.*)</a>@U', $s_ret, $a_tmp)
             )
                 throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
+            if (empty($a_tmp[0]))
+                continue;
             $a_chps = array();
             if (array_key_exists($s_vol, $this->chapters))
             {
@@ -94,7 +96,6 @@ class TOC extends Model\TOC
             if (empty($a_chps))
                 throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
             $this->chapters[$s_vol] = $a_chps;
-            $content = '<td colspan="4" class="vcss">' . $content;
         }
         while (true);
         if (empty($this->chapters))

@@ -61,7 +61,7 @@ class TOC extends Model\TOC
         $s_ret = $this->crop('@<div align="center">@', '@<div id="foot01">@', $content);
         if (false === $s_ret)
             throw new Model\ChaptersListingNotFoundException;
-        $content = $s_ret;
+        $content = '<h2 class="tc">正文</h2><ul>' . $s_ret . '</ul>';
         $this->chapters = array();
         $s_prefix = '/' == substr($this->url, -1) ? '' : basename($this->url) . '/';
         do
@@ -74,6 +74,8 @@ class TOC extends Model\TOC
                 false === preg_match_all('@<li><a href="/look/\d+/(\d+)/".*>(.*)</a></li>@U', $s_ret, $a_tmp)
             )
                 throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
+            if (empty($a_tmp[0]))
+                continue;
             $a_chps = array();
             if (array_key_exists($s_vol, $this->chapters))
             {
@@ -90,7 +92,6 @@ class TOC extends Model\TOC
                     }
                 }
             }
-            $a_chps = array();
             for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
             {
                 $a_chps[$s_prefix . $a_tmp[1][$ii] . '/'] = $a_tmp[2][$ii];

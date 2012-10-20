@@ -61,7 +61,7 @@ class TOC extends Model\TOC
         $s_ret = $this->crop('@<div class="bookdetail">@', '@<tr><td colspan="4" class="vcss">@', $content);
         if (false === $s_ret)
             throw new Model\ChaptersListingNotFoundException;
-        $content = $s_ret . '<td height="20"';
+        $content = '<strong>正文</strong></td>' . $s_ret . '<td height="20"';
         $this->chapters = array();
         do
         {
@@ -73,6 +73,8 @@ class TOC extends Model\TOC
                 false === preg_match_all('@<a style="" href="(\d+\.html)">(.*)</a>@U', $s_ret, $a_tmp)
             )
                 throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
+            if (empty($a_tmp[0]))
+                continue;
             $a_chps = array();
             if (array_key_exists($s_vol, $this->chapters))
             {
@@ -89,7 +91,6 @@ class TOC extends Model\TOC
                     }
                 }
             }
-            $a_chps = array();
             for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
                 $a_chps[$a_tmp[1][$ii]] = $a_tmp[2][$ii];
             if (empty($a_chps))

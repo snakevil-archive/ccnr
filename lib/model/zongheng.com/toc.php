@@ -68,6 +68,8 @@ class TOC extends Model\TOC
                 false === preg_match_all('@(<td>|</em>\s*)<a href="http://book.zongheng.com(.*)" title="最后更新时间:.*">(.*)</a>@U', $s_ret, $a_tmp)
             )
                 throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
+            if (empty($a_tmp[0]))
+                continue;
             $a_chps = array();
             if (array_key_exists($s_vol, $this->chapters))
             {
