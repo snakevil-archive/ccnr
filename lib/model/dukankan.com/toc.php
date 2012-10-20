@@ -36,7 +36,7 @@ class TOC extends Model\TOC
      *
      * @var string
      */
-    const PATTERN = '~^http://www\.dukankan\.com/html/\d+/\d+/index\.html$~';
+    const PATTERN = '~^http://www\.dukankan\.com/html/\d+/\d+/(index\.html)?$~';
 
     /**
      * Parses retrieved content into meta-data.
@@ -59,15 +59,36 @@ class TOC extends Model\TOC
             throw new Model\AuthorNotFoundException;
         $this->author = $s_ret;
         $s_ret = $this->crop('@<table border="0" align="center" cellpadding="4" cellspacing="1" class="acss">@', '@</table>@', $content);
-        if (false === $s_ret ||
-            false === preg_match_all('@<td class="ccss">\s*<a href="(\d+\.html)">(.*)</a>@U', $s_ret, $a_tmp)
-        )
+        if (false === $s_ret)
             throw new Model\ChaptersListingNotFoundException;
+        $content = $s_ret . '</table>';
         $this->chapters = array();
-        for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
+        do
         {
-            $this->chapters[$a_tmp[1][$ii]] = $a_tmp[2][$ii];
+            $s_vol = $this->crop('@<td colspan="4" class="vcss">@', '@</td>@', $content);
+            if (false === $s_vol)
+                break;
+            $s_ret = $this->crop('@<tr>@', '@(<td colspan="4" class="vcss">|</table>)@', $content);
+            if (false === $s_ret ||
+                false === preg_match_all('@<a href="(\d+\.html)">(.*)</a>@U', $s_ret, $a_tmp)
+            )
+                throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
+            while (array_key_exists($s_vol, $this->chapters))
+            {
+                list($s_vol, $ii) = explode('-', $s_vol);
+                if (!$ii)
+                    $ii = 1;
+                $s_vol .= '-' . (1 + $ii);
+            }
+            $a_chps = array();
+            for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
+                $a_chps[$a_tmp[1][$ii]] = $a_tmp[2][$ii];
+            if (empty($a_chps))
+                throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
+            $this->chapters[$s_vol] = $a_chps;
+            $content = '<td colspan="4" class="vcss">' . $content;
         }
+        while (true);
         if (empty($this->chapters))
             throw new Model\ChaptersListingNotFoundException;
         return $this;
