@@ -54,15 +54,30 @@ class TOC extends Model\TOC
             throw new Model\NovelTitleNotFoundException;
         list($this->title, $this->author) = explode(',', $s_ret);
         $s_ret = $this->crop('@<div class="chapter">@', '@<!-- 章节列表 结束 -->@', $content);
-        if (false === $s_ret ||
-            false === preg_match_all('@(<td>|</em>\s*)<a href="http://book.zongheng.com(.*)" title="最后更新时间:.*">(.*)</a>@U', $s_ret, $a_tmp)
-        )
+        if (false === $s_ret)
             throw new Model\ChaptersListingNotFoundException;
+        $content = $s_ret;
         $this->chapters = array();
-        for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
+        do
         {
-            $this->chapters[('/' == $a_tmp[1][$ii][1] ? '#' : '..') . $a_tmp[2][$ii]] = $a_tmp[3][$ii];
+            $s_vol = $this->crop('@<h2>@', '@</h2>@', $content);
+            if (false === $s_vol)
+                break;
+            $s_ret = $this->crop('@<div class="booklist">@', '@</div>@', $content);
+            if (false === $s_ret ||
+                false === preg_match_all('@(<td>|</em>\s*)<a href="http://book.zongheng.com(.*)" title="最后更新时间:.*">(.*)</a>@U', $s_ret, $a_tmp)
+            )
+                throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
+            $a_chps = array();
+            for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
+            {
+                $a_chps[('/' == $a_tmp[1][$ii][1] ? '#' : '..') . $a_tmp[2][$ii]] = $a_tmp[3][$ii];
+            }
+            if (empty($a_chps))
+                throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
+            $this->chapters[$s_vol] = $a_chps;
         }
+        while (true);
         if (empty($this->chapters))
             throw new Model\ChaptersListingNotFoundException;
         return $this;
