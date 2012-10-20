@@ -54,6 +54,8 @@ abstract class Analyzer
         if (!$s_host)
             throw new IllegalUrlException;
         $s_host = implode('_', array_slice(explode('.', $s_host), -2));
+        if (is_numeric($s_host[0]))
+            $s_host = '_' . $s_host;
         $s_ctoc = 'CCNR\\Model\\' . $s_host . '\\TOC';
         $s_cchp = 'CCNR\\Model\\' . $s_host . '\\Chapter';
         if (!class_exists($s_ctoc))

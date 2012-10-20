@@ -34,7 +34,7 @@ spl_autoload_register(function($class)
         if ('exception' == substr($s_fpath, -9) && 9 != strlen($s_fpath))
             $s_fpath = 'e.' . substr($s_fpath, 0, -9);
         array_push($a_nodes, $s_fpath);
-        $s_fpath = __DIR__ . '/../lib/' . str_replace('_', '.', implode('/', $a_nodes)) . '.php';
+        $s_fpath = __DIR__ . '/../lib/' . str_replace(array('/_', '_'), array('/@', '.'), implode('/', $a_nodes)) . '.php';
         if (is_file($s_fpath) && is_readable($s_fpath))
             require_once $s_fpath;
     });
