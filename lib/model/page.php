@@ -56,6 +56,21 @@ abstract class Page
     protected $url;
 
     /**
+     * Clears chapter title.
+     *
+     * THIS METHOD CANNOT BE OVERRIDEN.
+     *
+     * @param  string $title
+     * @return string
+     */
+    final protected function clearChapterTitle($title)
+    {
+        settype($title, 'string');
+        return trim(preg_replace(array('@[\\[\\(（【].*[\\]\\)）】]?$@u'
+                ), '', $title));
+    }
+
+    /**
      * CONSTRUCT FUNCTION
      *
      * THIS METHOD CANNOT BE OVERRIDEN.

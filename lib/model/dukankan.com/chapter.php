@@ -70,7 +70,7 @@ class Chapter extends Model\Chapter
         $s_ret = $this->crop('@<h1 id="h1">@', '@</h1>@', $content);
         if (false === $s_ret)
             throw new Model\ChapterTitleNotFoundException;
-        $this->title = $s_ret;
+        $this->title = $this->clearChapterTitle($s_ret);
         $s_ret = $this->crop('@<div id="content" style="font-size:16px;">\s*(&nbsp;)*@', '@</div>@', $content);
         if (false === $s_ret)
             throw new Model\ParagraphsNotFoundException;

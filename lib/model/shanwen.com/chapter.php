@@ -57,7 +57,7 @@ class Chapter extends Model\Chapter
         $s_ret = $this->crop('@<SPAN class=newstitle>@', '@</SPAN>@', $content);
         if (false === $s_ret)
             throw new Model\ChapterTitleNotFoundException;
-        $this->title = $s_ret;
+        $this->title = $this->clearChapterTitle($s_ret);
         $s_ret = $this->crop('@<DIV id="content">(\s*&nbsp;)*@', '@<br />\s*(<center>|(&nbsp;)+)闪文@', $content);
         if (false === $s_ret)
             throw new Model\ParagraphsNotFoundException;

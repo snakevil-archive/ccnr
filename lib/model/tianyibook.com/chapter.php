@@ -56,7 +56,7 @@ class Chapter extends Model\Chapter
         $a_tmp = explode(' ', substr($s_ret, 0, -15));
         $this->novelTitle = array_shift($a_tmp);
         array_shift($a_tmp);
-        $this->title = implode(' ', $a_tmp);
+        $this->title = $this->clearChapterTitle(implode(' ', $a_tmp));
         $s_ret = $this->crop('@<div id="content">(&nbsp;)*@', '@(&nbsp;)*</div>\s*<div id="footlink">@', $content);
         if (false === $s_ret)
             throw new Model\ParagraphsNotFoundException;

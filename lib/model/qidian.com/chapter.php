@@ -53,6 +53,7 @@ class Chapter extends Model\Chapter
         if (false === $s_ret)
             throw new Model\NovelTitleNotFoundException;
         list($this->novelTitle, $this->title) = explode('/', $s_ret);
+        $this->title = $this->clearChapterTitle($this->title);
         $s_ret = $this->crop('@<a id="HeadPrevLink" href="@', '@">@', $content);
         if (false === $s_ret)
             $this->prevLink = '';

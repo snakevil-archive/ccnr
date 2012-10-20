@@ -96,7 +96,7 @@ class TOC extends Model\TOC
                 $a_tmp[1][$ii] = array_pop(explode('/BookReader/', $a_tmp[1][$ii]));
                 if (0 === strpos($a_tmp[1][$ii], 'v'))
                     $a_tmp[1][$ii] = '#' . array_shift(explode('.', array_pop(explode(',', $a_tmp[1][$ii]))));
-                $a_chps[$a_tmp[1][$ii]] = $a_tmp[2][$ii];
+                $a_chps[$a_tmp[1][$ii]] = $this->clearChapterTitle($a_tmp[2][$ii]);
             }
             if (empty($a_chps))
                 throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));

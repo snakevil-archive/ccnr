@@ -57,7 +57,7 @@ class Chapter extends Model\Chapter
         $s_ret = $this->crop('@var chaptername=\'@', '@\';@', $content);
         if (false === $s_ret)
             throw new Model\ChapterTitleNotFoundException;
-        $this->title = $s_ret;
+        $this->title = $this->clearChapterTitle($s_ret);
         $this->tocLink = 'index.html';
         $s_ret = $this->crop('@var preview_page = "@', '@";@', $content);
         if (false === $s_ret)
