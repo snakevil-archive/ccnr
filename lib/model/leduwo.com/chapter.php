@@ -1,6 +1,6 @@
 <?php
 /**
- * Represents as a novel chapter in `tianyibook.com'.
+ * Represents as a novel chapter in `leduwo.com'.
  *
  * This file is part of NOVEL.READER.
  *
@@ -23,7 +23,7 @@
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
-namespace CCNR\Model\Tianyibook_com;
+namespace CCNR\Model\Leduwo_com;
 
 use CCNR\Model;
 
@@ -36,7 +36,7 @@ class Chapter extends Model\Chapter
      *
      * @var string
      */
-    const PATTERN = '~^http://www\.tianyibook\.com/tianyibook/\d+/\d+/\d+\.html$~';
+    const PATTERN = '~^http://www\.leduwo\.com/book/\d+/\d+/\d+\.html$~';
 
     /**
      * Parses retrieved content into meta-data.
