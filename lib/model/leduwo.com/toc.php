@@ -93,7 +93,7 @@ class TOC extends Model\TOC
             }
             for ($ii = 0, $jj = count($a_tmp[1]); $ii < $jj; $ii++)
             {
-                $a_chps[$s_prefix . $a_tmp[1][$ii] . '/'] = $this->clearChapterTitle($a_tmp[2][$ii]);
+                $a_chps[$s_prefix . $a_tmp[1][$ii]] = $this->clearChapterTitle($a_tmp[2][$ii]);
             }
             if (empty($a_chps))
                 throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
