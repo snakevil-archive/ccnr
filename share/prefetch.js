@@ -18,7 +18,7 @@
  *
  * @package   novel.reader
  * @author    Snakevil Zen <zsnakevil@gmail.com>
- * @copyright © 2012 szen.in
+ * @copyright © 2012-2013 szen.in
  * @license   http://www.gnu.org/licenses/gpl.html
  */
 
