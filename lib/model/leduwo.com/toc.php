@@ -36,7 +36,7 @@ class TOC extends Model\TOC
      *
      * @var string
      */
-    const PATTERN = '~^http://www\.leduwo\.com/book/\d+/\d+/(index\.html)?$~';
+    const PATTERN = '~^http://(www\.)?leduwo\.com/book/\d+/\d+/(index\.html)?$~';
 
     /**
      * Parses retrieved content into meta-data.
