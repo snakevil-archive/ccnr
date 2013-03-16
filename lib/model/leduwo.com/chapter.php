@@ -53,9 +53,8 @@ class Chapter extends Model\Chapter
         $s_ret = $this->crop('@<title>@', '@</title>@', $content);
         if (false === $s_ret)
             throw new Model\NovelTitleNotFoundException;
-        $a_tmp = explode(' ', substr($s_ret, 0, -15));
+        $a_tmp = explode(' ', substr($s_ret, 0, -12));
         $this->novelTitle = array_shift($a_tmp);
-        array_shift($a_tmp);
         $this->title = $this->clearChapterTitle(implode(' ', $a_tmp));
         $s_ret = $this->crop('@<div id="content">(&nbsp;)*@', '@(&nbsp;)*</div>\s*<div id="footlink">@', $content);
         if (false === $s_ret)
