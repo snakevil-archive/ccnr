@@ -36,7 +36,7 @@ class TOC extends Model\TOC
      *
      * @var string
      */
-    const PATTERN = '~^http://www\.qidian\.com/BookReader/\d+\.aspx$~';
+    const PATTERN = '~^http://read\.qidian\.com/BookReader/\d+\.aspx$~';
 
     /**
      * Parses retrieved content into meta-data.

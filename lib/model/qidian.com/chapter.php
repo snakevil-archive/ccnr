@@ -36,7 +36,7 @@ class Chapter extends Model\Chapter
      *
      * @var string
      */
-    const PATTERN = '~^http://www\.qidian\.com/BookReader/\d+,\d+\.aspx$~';
+    const PATTERN = '~^http://read\.qidian\.com/BookReader/\d+,\d+\.aspx$~';
 
     /**
      * Parses retrieved content into meta-data.
