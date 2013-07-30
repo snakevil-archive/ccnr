@@ -53,11 +53,11 @@ class Chapter extends Model\Chapter
         if (false === $s_ret)
             throw new Model\NovelTitleNotFoundException;
         $this->novelTitle = $s_ret;
-        $s_ret = $this->crop('@<h2>.*<em>@', '@</em></h2>@', $content);
+        $s_ret = $this->crop('@<h2>.*<em itemprop="headline">@', '@</em></h2>@', $content);
         if (false === $s_ret)
             throw new Model\ChapterTitleNotFoundException;
         $this->title = $this->clearChapterTitle($s_ret);
-        $s_ret = $this->crop('@<div id="chapterContent" class="content"><p>@', '@</p></div>@', $content);
+        $s_ret = $this->crop('@<div id="chapterContent" class="content" itemprop="acticleBody"><p>@', '@</p></div>@', $content);
         if (false === $s_ret)
             throw new Model\ParagraphsNotFoundException;
         $this->paragraphs = array();
