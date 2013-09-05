@@ -158,8 +158,10 @@ abstract class Page
                 CURLOPT_FORBID_REUSE => true,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => 'gzip,deflate',
-                CURLOPT_USERAGENT => 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.19 (KHTML, like Gecko) ' .
-                    'Ubuntu/11.10 Chromium/18.0.1025.168 Chrome/18.0.1025.168 Safari/535.19'
+                CURLOPT_USERAGENT => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) '
+                    . 'AppleWebKit/537.22 (KHTML, like Gecko) '
+                    . 'Chrome/25.0.1364.172 '
+                    . 'Safari/537.22'
             ));
         $s_page = curl_exec($r_page);
         if (false === $s_page)
