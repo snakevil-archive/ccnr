@@ -25,6 +25,8 @@
 
 namespace CCNR\Model;
 
+use PDO;
+
 abstract class Chapter extends Page
 {
     /**
@@ -85,6 +87,71 @@ abstract class Chapter extends Page
         else if ('nextLink' == $prop)
             return $this->nextLink;
         return parent::__get($prop);
+    }
+
+    /**
+     * Reads page informations from local database.
+     *
+     * THIS METHOD CANNOT BE OVERRIDEN.
+     *
+     * @param  string $url
+     * @return array
+     */
+    final protected function read($url)
+    {
+        $s_sql = 'SELECT book novelTitle, title, purl prevLink, nurl nextLink, paragraphs paragraphs'
+            . ' FROM chapters'
+            . ' WHERE url = ?';
+        $o_stmt = $this->db->prepare($s_sql);
+        $a_ret = false;
+        if ($o_stmt->execute(array($url))) {
+            $a_ret = $o_stmt->fetchAll(PDO::FETCH_ASSOC);
+            $o_stmt->closeCursor();
+            if (count($a_ret)) {
+                $a_ret = $a_ret[0];
+                $a_ret['paragraphs'] = json_decode($a_ret['paragraphs']);
+                $a_ret['tocLink'] = dirname($a_ret['prevLink']);
+            } else {
+                $a_ret = false;
+            }
+        }
+        return $a_ret;
+    }
+
+    final protected function write()
+    {
+        if ($this->nextLink) {
+            $s_sql = 'SELECT 1 FROM chapters WHERE url = ?';
+            $o_stmt = $this->db->prepare($s_sql);
+            if ($o_stmt->execute(array($this->url))) {
+                if (!$o_stmt->rowCount()) {
+                    $o_stmt->closeCursor();
+                    $s_sql = 'INSERT INTO chapters (url, book, title, purl, nurl, paragraphs, ctime, cip)'
+                        . ' VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+                    $o_stmt = $this->db->prepare($s_sql);
+                    $b_suc = $o_stmt->execute(
+                        array(
+                            $this->url,
+                            $this->novelTitle,
+                            $this->title,
+                            $this->prevLink,
+                            $this->nextLink,
+                            json_encode($this->paragraphs, JSON_UNESCAPED_UNICODE),
+                            $_SERVER['REQUEST_TIME'],
+                            $_SERVER['REMOTE_ADDR']
+                        )
+                    );
+                    if (!$b_suc) {
+                        ob_end_clean();
+                        var_dump($o_stmt->errorInfo());
+                        die;
+                    }
+                } else {
+                    $o_stmt->closeCursor();
+                }
+            }
+        }
+        return $this;
     }
 }
 

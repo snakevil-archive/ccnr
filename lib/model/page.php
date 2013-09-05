@@ -25,6 +25,8 @@
 
 namespace CCNR\Model;
 
+use PDO;
+
 abstract class Page
 {
     /**
@@ -56,6 +58,13 @@ abstract class Page
     protected $url;
 
     /**
+     * Stores the database connection.
+     *
+     * @var PDO
+     */
+    protected $db;
+
+    /**
      * Clears chapter title.
      *
      * THIS METHOD CANNOT BE OVERRIDEN.
@@ -66,8 +75,28 @@ abstract class Page
     final protected function clearChapterTitle($title)
     {
         settype($title, 'string');
-        return trim(preg_replace(array('@[\\[\\(（【].*[\\]\\)）】]?$@u'
-                ), '', $title));
+        return $title;
+    }
+
+    /**
+     * Reads page informations from local database.
+     *
+     * @param  string $url
+     * @return array
+     */
+    protected function read($url)
+    {
+        return false;
+    }
+
+    /**
+     * Writes informations into local database.
+     *
+     * @return self
+     */
+    protected function write()
+    {
+        return $this;
     }
 
     /**
@@ -79,11 +108,20 @@ abstract class Page
      */
     final public function __construct($url)
     {
+        $this->db = new PDO('sqlite:' . __DIR__ . '/../../var/db/ccnr.sdb');
         settype($url, 'string');
         if (!static::validate($url))
             throw new DismatchedPageException;
         $this->url = $url;
-        $this->parse($this->read($url));
+        $a_ret = $this->read($url);
+        if ($a_ret) {
+            foreach ($a_ret as $ii => $jj) {
+                $this->$ii = $jj;
+            }
+        } else {
+            $this->parse($this->curl($url));
+            $this->write();
+        }
     }
 
     /**
@@ -148,7 +186,7 @@ abstract class Page
      * @param  string $url
      * @return string
      */
-    final protected function read($url)
+    final protected function curl($url)
     {
         $r_page = curl_init($url);
         $b_ret = is_resource($r_page);
