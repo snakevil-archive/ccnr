@@ -67,11 +67,11 @@ class Chapter extends Model\Chapter
         $s_ret = $this->crop('@var preview_page = "@', '@";@', $content);
         if (false === $s_ret)
             throw new Model\PrevLinkNotFoundException;
-        $this->prevLink = 'index.html' == $s_ret ? './' : $s_ret;
+        $this->prevLink = 'index.html' == $s_ret ? '' : $s_ret;
         $s_ret = $this->crop('@var next_page = "@', '@";@', $content);
         if (false === $s_ret)
             throw new Model\NextLinkNotFoundException;
-        $this->nextLink = 'index.html' == $s_ret ? './' : $s_ret;
+        $this->nextLink = 'index.html' == $s_ret ? '' : $s_ret;
         $this->tocLink = './';
         $s_ret = $this->crop('@<div id="content">\s*(&nbsp;)*@', '@<div id="adbottom">@', $content);
         if (false === $s_ret)
