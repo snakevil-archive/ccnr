@@ -57,7 +57,7 @@ class TOC extends Model\TOC
         if (false === $s_ret)
             throw new Model\AuthorNotFoundException;
         $this->author = $s_ret;
-        $s_ret = $this->crop('@<div class="directory_con">@', '@<div class="directory_title">@', $content);
+        $s_ret = $this->crop('@<div class="directory_con">@', '@<div id="template" style="display:none;">@', $content);
         if (false === $s_ret)
             throw new Model\ChaptersListingNotFoundException;
         $content = $s_ret;
@@ -69,7 +69,7 @@ class TOC extends Model\TOC
                 break;
             $s_ret = $this->crop('@<ul>@', '@</ul>@', $content);
             if (false === $s_ret ||
-                false === preg_match_all('@(</em>)?<a title=".*" target="_blank" href="(/chapter/\d+/\d+\.html)"(?:| rel="nofollow")\s*>\s*(.*)\s*</a>@U', $s_ret, $a_tmp)
+                false === preg_match_all('@(</em>)?<a id=".*" tn=".*" tw=".*" td=".*" target="_blank" href="(/chapter/\d+/\d+\.html)"(?:| rel="nofollow")\s*>\s*(.*)\s*</a>@U', $s_ret, $a_tmp)
             )
                 throw new Model\ChaptersListingNotFoundException(array('volume' => $s_vol));
             if (empty($a_tmp[0]))
