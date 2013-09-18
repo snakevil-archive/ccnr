@@ -50,12 +50,12 @@ class Chapter extends Model\Chapter
     {
         settype($content, 'string');
         $content = iconv('gbk', 'utf-8//ignore', $content);
-        $s_ret = $this->crop('@<title>@', '@</title>@', $content);
+        $s_ret = $this->crop('@乐读窝</a>-&gt;<a href="index.html">@', '@</div>@', $content);
         if (false === $s_ret)
             throw new Model\NovelTitleNotFoundException;
-        $a_tmp = explode(' ', substr($s_ret, 0, -12));
+        $a_tmp = explode('</a>-&gt;', $s_ret);
         $this->novelTitle = array_shift($a_tmp);
-        $this->title = $this->clearChapterTitle(implode(' ', $a_tmp));
+        $this->title = array_shift($a_tmp);
         $s_ret = $this->crop('@<div id="content">(&nbsp;)*@', '@(&nbsp;)*</div>\s*<div id="footlink">@', $content);
         if (false === $s_ret)
             throw new Model\ParagraphsNotFoundException;
