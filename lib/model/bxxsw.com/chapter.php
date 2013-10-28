@@ -50,20 +50,6 @@ class Chapter extends Model\Chapter
     {
         settype($content, 'string');
         $content = iconv('gbk', 'utf-8//ignore', $content);
-        $s_ret = $this->crop('@<title>@', '@-冰雪小说网</title>@', $content);
-        if (false === $s_ret)
-            throw new Model\NovelTitleNotFoundException;
-        $a_tmp = explode('-', $s_ret);
-        if (2 != count($a_tmp)) {
-            throw new Model\NovelTitleNotFoundException;
-        }
-        $s_ret = $a_tmp[0];
-        $i_pos = strpos($s_ret, ',');
-        if (false === $i_pos) {
-            throw new Model\ChapterTitleNotFoundException;
-        }
-        $this->novelTitle = substr($s_ret, 0, $i_pos);
-        $this->title = $this->clearChapterTitle(substr($s_ret, 1 + $i_pos));
         $s_ret = $this->crop('@var preview_page = "@', '@";@', $content);
         if (false === $s_ret)
             throw new Model\PrevLinkNotFoundException;
@@ -73,6 +59,15 @@ class Chapter extends Model\Chapter
             throw new Model\NextLinkNotFoundException;
         $this->nextLink = 'index.html' == $s_ret ? '' : $s_ret;
         $this->tocLink = './';
+        $s_ret = $this->crop('@<H1><a href=".*">@', '@</H1>@', $content);
+        if (false === $s_ret)
+            throw new Model\NovelTitleNotFoundException;
+        $a_tmp = explode('</a>', $s_ret);
+        if (2 != count($a_tmp)) {
+            throw new Model\ChapterTitleNotFoundException;
+        }
+        $this->novelTitle = $a_tmp[0];
+        $this->title = $this->clearChapterTitle($a_tmp[1]);
         $s_ret = $this->crop('@<div id="content">\s*(&nbsp;)*@', '@<div id="adbottom">@', $content);
         if (false === $s_ret)
             throw new Model\ParagraphsNotFoundException;
