@@ -50,14 +50,6 @@ class Chapter extends Model\Chapter
     {
         settype($content, 'string');
         $content = iconv('gbk', 'utf-8//ignore', $content);
-        $s_ret = $this->crop('@<title>@', '@最新章节@', $content);
-        if (false === $s_ret)
-            throw new Model\NovelTitleNotFoundException;
-        $this->novelTitle = $s_ret;
-        $s_ret = $this->crop('@,@', '@,飘天文学</title>@', $content);
-        if (false === $s_ret)
-            throw new Model\ChapterTitleNotFoundException;
-        $this->title = $this->clearChapterTitle($s_ret);
         $s_ret = $this->crop('@var preview_page = "@', '@";@', $content);
         if (false === $s_ret)
             throw new Model\PrevLinkNotFoundException;
@@ -67,6 +59,15 @@ class Chapter extends Model\Chapter
             throw new Model\NextLinkNotFoundException;
         $this->nextLink = 'index.html' == $s_ret ? '' : $s_ret;
         $this->tocLink = './';
+        $s_ret = $this->crop('@<H1><a href=".*">@', '@</H1>@', $content);
+        if (false === $s_ret)
+            throw new Model\NovelTitleNotFoundException;
+        $a_tmp = explode('</a>', $s_ret);
+        if (2 != count($a_tmp)) {
+            throw new Model\ChapterTitleNotFoundException;
+        }
+        $this->novelTitle = $a_tmp[0];
+        $this->title = $this->clearChapterTitle($a_tmp[1]);
         $s_ret = $this->crop('@</td></tr></table></td></tr></table>\s*<br>\s*(&nbsp;)*@', '@</div>\s*<!--@', $content);
         if (false === $s_ret)
             throw new Model\ParagraphsNotFoundException;
