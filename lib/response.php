@@ -128,6 +128,7 @@ class Response
      */
     public function close()
     {
+        header('Content-Length: ' . strlen($this->buffer));
         echo $this->buffer;
         exit(0);
     }

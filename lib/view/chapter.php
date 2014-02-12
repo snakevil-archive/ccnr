@@ -75,14 +75,14 @@ function navpage(ev){ev=ev||window.event;switch(ev.keyCode){
 </head>
 <body onkeyup="navpage(arguments[0])">
 <h2>
-<a id="tocLink" href="{$this->page->tocLink}">{$this->page->title}</a>
+<a href="{$this->page->tocLink}">{$this->page->title}</a>
 </h2>
 <blockquote cite="{$this->page->url}">
 <p>{$s_paragraphs}</p>
 </blockquote>
 <ul>
-<li><a id="prevLink" href="{$this->page->prevLink}">上一章</a></li>
-<li class="nextLink"><a id="nextLink" href="{$this->page->nextLink}">下一章</a></li>
+<li><a id="prevLink" href="{$this->page->prevLink}"><span>上一章</span></a></li>
+<li><a id="nextLink" href="{$this->page->nextLink}"><span>下一章</span></a></li>
 </ul>
 <script type="text/javascript" src="{$this->uri}share/prefetch.js"></script>
 <noscript><fieldset><img src="{$this->page->nextLink}" /></fieldset></noscript>

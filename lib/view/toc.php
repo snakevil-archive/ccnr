@@ -70,7 +70,7 @@ class TOC extends Page
 <link rel="shortcut icon" href="{$this->uri}share/ccnr.ico" type="image/x-icon" />
 </head>
 <body>
-<h1><label author="{$this->page->author}">{$this->page->title}</label></h1>
+<h1><span>{$this->page->title}</span><small>by {$this->page->author}</small></h1>
 <dl>
 {$s_chapters}
 </dl>
