@@ -68,7 +68,7 @@ class Chapter extends Model\Chapter
         }
         $this->novelTitle = $a_tmp[0];
         $this->title = $this->clearChapterTitle($a_tmp[1]);
-        $s_ret = $this->crop('@</td></tr></table></td></tr></table>\s*<br>\s*(&nbsp;)*@', '@</div>\s*<!--@', $content);
+        $s_ret = $this->crop('@</td></tr></table></td>\s*</tr></table>\s*<br>\s*(&nbsp;)*@', '@</div>\s*<!--@', $content);
         if (false === $s_ret)
             throw new Model\ParagraphsNotFoundException;
         $this->paragraphs = array();
